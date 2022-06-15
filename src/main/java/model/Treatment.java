@@ -1,6 +1,7 @@
 package model;
 
 import utils.DateConverter;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -12,19 +13,21 @@ public class Treatment {
     private LocalTime end;
     private String description;
     private String remarks;
+    private String lockState;
 
     public Treatment(long pid, LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks) {
+                     LocalTime end, String description, String remarks, String lockState) {
         this.pid = pid;
         this.date = date;
         this.begin = begin;
         this.end = end;
         this.description = description;
         this.remarks = remarks;
+        this.lockState = lockState;
     }
 
     public Treatment(long tid, long pid, LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks) {
+                     LocalTime end, String description, String remarks, String lockState) {
         this.tid = tid;
         this.pid = pid;
         this.date = date;
@@ -32,6 +35,7 @@ public class Treatment {
         this.end = end;
         this.description = description;
         this.remarks = remarks;
+        this.lockState = lockState;
     }
 
     public long getTid() {
@@ -85,6 +89,14 @@ public class Treatment {
         this.remarks = remarks;
     }
 
+    public String getLockState() {
+        return lockState;
+    }
+
+    public void setLockState(String lockState) {
+        this.lockState = lockState;
+    }
+
     public String toString() {
         return "\nBehandlung" + "\nTID: " + this.tid +
                 "\nPID: " + this.pid +
@@ -92,6 +104,7 @@ public class Treatment {
                 "\nBegin: " + this.begin +
                 "\nEnd: " + this.end +
                 "\nDescription: " + this.description +
-                "\nRemarks: " + this.remarks + "\n";
+                "\nRemarks: " + this.remarks +
+                "\nLockState: " + this.lockState;
     }
 }

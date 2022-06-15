@@ -7,6 +7,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.Patient;
 import model.Treatment;
@@ -30,6 +31,7 @@ public class NewTreatmentController {
     private TextArea taRemarks;
     @FXML
     private DatePicker datepicker;
+
 
     private AllTreatmentController controller;
     private Patient patient;
@@ -56,11 +58,12 @@ public class NewTreatmentController {
         String description = txtDescription.getText();
         String remarks = taRemarks.getText();
         Treatment treatment = new Treatment(patient.getPid(), date,
-                begin, end, description, remarks);
+                begin, end, description, remarks, LockConstants.UNLOCKED);
         createTreatment(treatment);
         controller.readAllAndShowInTableView();
         stage.close();
     }
+
 
     private void createTreatment(Treatment treatment) {
         TreatmentDAO dao = DAOFactory.getDAOFactory().createTreatmentDAO();

@@ -1,2 +1,25 @@
-/*C5*/SET SCHEMA PUBLIC
-DISCONNECT
+/*C3*/SET SCHEMA PUBLIC
+DELETE FROM TREATMENT WHERE TID=16
+INSERT INTO TREATMENT VALUES(16,15,'2020-08-31','13:30','13:45','Toilettengang','Hilfe beim Toilettengang; Patientin klagt \u00fcber Schmerzen beim Stuhlgang. Gabe von Iberogast','Entsperrt')
+COMMIT
+DELETE FROM TREATMENT WHERE TID=16
+INSERT INTO TREATMENT VALUES(16,15,'2020-08-31','13:30','13:45','Toilettengang','Hilfe beim Toilettengang; Patientin klagt \u00fcber Schmerzen beim Stuhlgang. Gabe von Iberogast','Entsperrt')
+COMMIT
+DELETE FROM TREATMENT WHERE TID=14
+INSERT INTO TREATMENT VALUES(14,5,'2020-08-24','09:30','10:15','KG','Lympfdrainage','Entsperrt')
+COMMIT
+DELETE FROM TREATMENT WHERE TID=3
+INSERT INTO TREATMENT VALUES(3,3,'2020-06-04','07:30','08:00','Waschen','Patient mit Waschlappen gewaschen und frisch angezogen. Patient gewendet.','Entsperrt')
+COMMIT
+DELETE FROM TREATMENT WHERE TID=2
+INSERT INTO TREATMENT VALUES(2,1,'2020-06-05','11:00','12:30','Gespr\u00e4ch','Patient irrt auf der Suche nach gestohlenen Wertsachen durch die Etage und bezichtigt andere Bewohner des Diebstahls.\u000aPatient wird in seinen Raum zur\u00fcckbegleitet und erh\u00e4lt Beruhigungsmittel.','Entsperrt')
+COMMIT
+DELETE FROM TREATMENT WHERE TID=16
+INSERT INTO TREATMENT VALUES(16,15,'2020-08-31','13:30','13:45','Toilettengang','Hilfe beim Toilettengang; Patientin klagt \u00fcber Schmerzen beim Stuhlgang. Gabe von Iberogast','Gesperrt')
+COMMIT
+DELETE FROM TREATMENT WHERE TID=16
+INSERT INTO TREATMENT VALUES(16,15,'2020-08-31','13:30','13:45','Toilettengang','Hilfe beim Toilettengang; Patientin klagt \u00fcber Schmerzen beim Stuhlgang. Gabe von Iberogast','Entsperrt')
+COMMIT
+DELETE FROM TREATMENT WHERE TID=16
+INSERT INTO TREATMENT VALUES(16,15,'2020-08-31','13:30','13:45','Toilettengang','Hilfe beim Toilettengang; Patientin klagt \u00fcber Schmerzen beim Stuhlgang. Gabe von Iberogast','Entsperrt')
+COMMIT

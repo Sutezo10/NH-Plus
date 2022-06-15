@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import model.Patient;
 import model.Treatment;
 import utils.DateConverter;
+
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -39,7 +40,7 @@ public class TreatmentController {
 
     public void initializeController(AllTreatmentController controller, Stage stage, Treatment treatment) {
         this.stage = stage;
-        this.controller= controller;
+        this.controller = controller;
         PatientDAO pDao = DAOFactory.getDAOFactory().createPatientDAO();
         try {
             this.patient = pDao.read((int) treatment.getPid());
@@ -50,8 +51,8 @@ public class TreatmentController {
         }
     }
 
-    private void showData(){
-        this.lblPatientName.setText(patient.getSurname()+", "+patient.getFirstName());
+    private void showData() {
+        this.lblPatientName.setText(patient.getSurname() + ", " + patient.getFirstName());
         this.lblCarelevel.setText(patient.getCareLevel());
         LocalDate date = DateConverter.convertStringToLocalDate(treatment.getDate());
         this.datepicker.setValue(date);
@@ -62,7 +63,7 @@ public class TreatmentController {
     }
 
     @FXML
-    public void handleChange(){
+    public void handleChange() {
         this.treatment.setDate(this.datepicker.getValue().toString());
         this.treatment.setBegin(txtBegin.getText());
         this.treatment.setEnd(txtEnd.getText());
@@ -73,7 +74,7 @@ public class TreatmentController {
         stage.close();
     }
 
-    private void doUpdate(){
+    private void doUpdate() {
         TreatmentDAO dao = DAOFactory.getDAOFactory().createTreatmentDAO();
         try {
             dao.update(treatment);
@@ -83,7 +84,7 @@ public class TreatmentController {
     }
 
     @FXML
-    public void handleCancel(){
+    public void handleCancel() {
         stage.close();
     }
 }

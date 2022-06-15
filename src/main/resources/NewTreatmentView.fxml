@@ -60,6 +60,11 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
+             <Label text="Sperrdatum:"  GridPane.rowIndex="8">
+                 <font>
+                     <Font name="System Bold" size="13.0" />
+                 </font>
+             </Label>
             <TextField fx:id="txtBegin" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <TextField fx:id="txtEnd" maxWidth="192.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="txtDescription" GridPane.columnIndex="3" GridPane.rowIndex="4" />
