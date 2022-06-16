@@ -7,7 +7,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.Patient;
 import model.Treatment;
@@ -52,13 +51,12 @@ public class NewTreatmentController {
     @FXML
     public void handleAdd(){
         LocalDate date = this.datepicker.getValue();
-        String s_begin = txtBegin.getText();
         LocalTime begin = DateConverter.convertStringToLocalTime(txtBegin.getText());
         LocalTime end = DateConverter.convertStringToLocalTime(txtEnd.getText());
         String description = txtDescription.getText();
         String remarks = taRemarks.getText();
         Treatment treatment = new Treatment(patient.getPid(), date,
-                begin, end, description, remarks, LockConstants.UNLOCKED);
+                begin, end, description, remarks, ControllerConstants.UNLOCKED,LocalDate.now());
         createTreatment(treatment);
         controller.readAllAndShowInTableView();
         stage.close();

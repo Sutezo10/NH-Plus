@@ -41,7 +41,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="btnNewTreament" mnemonicParsing="false" onAction="#handleNewTreatment" prefWidth="200.0" text="neue Behandlung anlegen" GridPane.columnIndex="1" />
+                  <Button fx:id="btnNewTreatment" mnemonicParsing="false" onAction="#handleNewTreatment" prefWidth="200.0" text="neue Behandlung anlegen" GridPane.columnIndex="1" />
                   <ComboBox fx:id="comboBox" minWidth="160.0" onAction="#handleComboBox" prefWidth="200.0" />
                    <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#handleDelete" prefWidth="150.0" text="Löschen" GridPane.columnIndex="2" />
                    <Button fx:id="btnLockTreatment" mnemonicParsing="false" onAction="#handleLockTreatment" prefWidth="150.0" text="Sperren" GridPane.columnIndex="3" />

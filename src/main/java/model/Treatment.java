@@ -15,8 +15,10 @@ public class Treatment {
     private String remarks;
     private String lockState;
 
+    private LocalDate lockDate;
+
     public Treatment(long pid, LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks, String lockState) {
+                     LocalTime end, String description, String remarks, String lockState, LocalDate lockDate) {
         this.pid = pid;
         this.date = date;
         this.begin = begin;
@@ -24,10 +26,11 @@ public class Treatment {
         this.description = description;
         this.remarks = remarks;
         this.lockState = lockState;
+        this.lockDate = lockDate;
     }
 
     public Treatment(long tid, long pid, LocalDate date, LocalTime begin,
-                     LocalTime end, String description, String remarks, String lockState) {
+                     LocalTime end, String description, String remarks, String lockState, LocalDate lockDate) {
         this.tid = tid;
         this.pid = pid;
         this.date = date;
@@ -36,6 +39,7 @@ public class Treatment {
         this.description = description;
         this.remarks = remarks;
         this.lockState = lockState;
+        this.lockDate = lockDate;
     }
 
     public long getTid() {
@@ -59,18 +63,15 @@ public class Treatment {
     }
 
     public void setDate(String s_date) {
-        LocalDate date = DateConverter.convertStringToLocalDate(s_date);
-        this.date = date;
+        this.date = DateConverter.convertStringToLocalDate(s_date);
     }
 
     public void setBegin(String begin) {
-        LocalTime time = DateConverter.convertStringToLocalTime(begin);
-        this.begin = time;
+        this.begin = DateConverter.convertStringToLocalTime(begin);
     }
 
     public void setEnd(String end) {
-        LocalTime time = DateConverter.convertStringToLocalTime(end);
-        this.end = time;
+        this.end = DateConverter.convertStringToLocalTime(end);
     }
 
     public String getDescription() {
@@ -95,6 +96,15 @@ public class Treatment {
 
     public void setLockState(String lockState) {
         this.lockState = lockState;
+    }
+
+    public LocalDate getLockDate() {
+        return lockDate;
+    }
+
+
+    public void setLockDate(String lockDate) {
+        this.lockDate = DateConverter.convertStringToLocalDate(lockDate);
     }
 
     public String toString() {

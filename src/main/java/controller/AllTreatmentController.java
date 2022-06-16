@@ -17,6 +17,7 @@ import model.Treatment;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,66 +38,88 @@ public class AllTreatmentController {
     private TableColumn<Treatment, String> colDescription;
     @FXML
     private TableColumn<Treatment, String> colLockState;
+
+    private final TableColumn<Treatment, String> colLockDate = new TableColumn<>();
     @FXML
     private ComboBox<String> comboBox;
     @FXML
     private Button btnNewTreatment;
     @FXML
     private Button btnDelete;
-
     @FXML
     private Button btnLockTreatment;
-
     @FXML
     private Button btnUnlockTreatment;
 
-    private ObservableList<Treatment> tableviewContent =
+    private final ObservableList<Treatment> tableviewContent =
             FXCollections.observableArrayList();
-    private TreatmentDAO dao;
-    private ObservableList<String> myComboBoxData =
+    private TreatmentDAO treatmentDAO;
+
+    private final ObservableList<String> myComboBoxData =
             FXCollections.observableArrayList();
     private ArrayList<Patient> patientList;
-    private Main main;
+
 
     public void initialize() {
         createComboBoxData();
+        checkLockedData();
         readAllAndShowInTableView();
         comboBox.setItems(myComboBoxData);
         comboBox.getSelectionModel().select(0);
-        this.main = main;
 
-        this.colID.setCellValueFactory(new PropertyValueFactory<Treatment, Integer>("tid"));
-        this.colPid.setCellValueFactory(new PropertyValueFactory<Treatment, Integer>("pid"));
-        this.colDate.setCellValueFactory(new PropertyValueFactory<Treatment, String>("date"));
-        this.colBegin.setCellValueFactory(new PropertyValueFactory<Treatment, String>("begin"));
-        this.colEnd.setCellValueFactory(new PropertyValueFactory<Treatment, String>("end"));
-        this.colDescription.setCellValueFactory(new PropertyValueFactory<Treatment, String>("description"));
-        this.colLockState.setCellValueFactory(new PropertyValueFactory<Treatment, String>("lockState"));
+        this.colID.setCellValueFactory(new PropertyValueFactory<>("tid"));
+        this.colPid.setCellValueFactory(new PropertyValueFactory<>("pid"));
+        this.colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        this.colBegin.setCellValueFactory(new PropertyValueFactory<>("begin"));
+        this.colEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
+        this.colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        this.colLockState.setCellValueFactory(new PropertyValueFactory<>("lockState"));
+        this.colLockDate.setCellValueFactory(new PropertyValueFactory<>("lockDate"));
         this.tableView.setItems(this.tableviewContent);
     }
 
     public void readAllAndShowInTableView() {
         this.tableviewContent.clear();
-        comboBox.getSelectionModel().select(0);
-        this.dao = DAOFactory.getDAOFactory().createTreatmentDAO();
+        this.treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
         List<Treatment> allTreatments;
         try {
-            allTreatments = dao.readAll();
-            for (Treatment treatment : allTreatments) {
-                this.tableviewContent.add(treatment);
-            }
+            allTreatments = treatmentDAO.readAll();
+            this.tableviewContent.addAll(allTreatments);
+            comboBox.getSelectionModel().select(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     private void createComboBoxData() {
-        PatientDAO dao = DAOFactory.getDAOFactory().createPatientDAO();
+        PatientDAO patientDAO = DAOFactory.getDAOFactory().createPatientDAO();
         try {
-            patientList = (ArrayList<Patient>) dao.readAll();
+            patientList = (ArrayList<Patient>) patientDAO.readAll();
             this.myComboBoxData.add("alle");
             for (Patient patient : patientList) {
                 this.myComboBoxData.add(patient.getSurname());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void checkLockedData() {
+        treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
+        try {
+            int dateYear = LocalDate.now().getYear();
+            int dateMonth = LocalDate.now().getMonthValue();
+            int dateDay = LocalDate.now().getDayOfMonth();
+            List<Treatment> allTreatments = this.treatmentDAO.readAll();
+            for (Treatment treatment : allTreatments) {
+                int treatmentDateYear = treatment.getLockDate().getYear();
+                int treatmentDateMonth = treatment.getLockDate().getMonthValue();
+                int treatmentDateDay = treatment.getLockDate().getDayOfMonth();
+                if (dateYear - treatmentDateYear >= 10 && treatment.getLockState().equals(ControllerConstants.LOCKED)) {
+                    if (dateMonth >= treatmentDateMonth && dateDay >= treatmentDateDay) {
+                        treatmentDAO.deleteById(treatment.getTid());
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -108,14 +131,12 @@ public class AllTreatmentController {
     public void handleComboBox() {
         String p = this.comboBox.getSelectionModel().getSelectedItem();
         this.tableviewContent.clear();
-        this.dao = DAOFactory.getDAOFactory().createTreatmentDAO();
+        this.treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
         List<Treatment> allTreatments;
         if (p.equals("alle")) {
             try {
-                allTreatments = this.dao.readAll();
-                for (Treatment treatment : allTreatments) {
-                    this.tableviewContent.add(treatment);
-                }
+                allTreatments = this.treatmentDAO.readAll();
+                this.tableviewContent.addAll(allTreatments);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -123,10 +144,8 @@ public class AllTreatmentController {
         Patient patient = searchInList(p);
         if (patient != null) {
             try {
-                allTreatments = dao.readTreatmentsByPid(patient.getPid());
-                for (Treatment treatment : allTreatments) {
-                    this.tableviewContent.add(treatment);
-                }
+                allTreatments = treatmentDAO.readTreatmentsByPid(patient.getPid());
+                this.tableviewContent.addAll(allTreatments);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -134,9 +153,9 @@ public class AllTreatmentController {
     }
 
     private Patient searchInList(String surname) {
-        for (int i = 0; i < this.patientList.size(); i++) {
-            if (this.patientList.get(i).getSurname().equals(surname)) {
-                return this.patientList.get(i);
+        for (Patient patient : this.patientList) {
+            if (patient.getSurname().equals(surname)) {
+                return patient;
             }
         }
         return null;
@@ -146,9 +165,9 @@ public class AllTreatmentController {
     public void handleDelete() {
         int index = this.tableView.getSelectionModel().getSelectedIndex();
         Treatment t = this.tableviewContent.remove(index);
-        TreatmentDAO dao = DAOFactory.getDAOFactory().createTreatmentDAO();
+        treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
         try {
-            dao.deleteById(t.getTid());
+            treatmentDAO.deleteById(t.getTid());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -162,7 +181,7 @@ public class AllTreatmentController {
             newTreatmentWindow(patient);
         } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information");
+            alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
             alert.setHeaderText("Patient für die Behandlung fehlt!");
             alert.setContentText("Wählen Sie über die Combobox einen Patienten aus!");
             alert.showAndWait();
@@ -173,20 +192,20 @@ public class AllTreatmentController {
     public void handleMouseClick() {
         tableView.setOnMouseClicked(event -> {
             TableView.TableViewSelectionModel<Treatment> selectionModel = tableView.getSelectionModel();
-            if (event.getClickCount() == 2 && (selectionModel.getSelectedItem() != null) ) {
-              if (selectionModel.getSelectedItem().getLockState().equals(LockConstants.UNLOCKED)){
-                  int index = this.tableView.getSelectionModel().getSelectedIndex();
-                  Treatment treatment = this.tableviewContent.get(index);
+            if (event.getClickCount() == 2 && (selectionModel.getSelectedItem() != null)) {
+                if (selectionModel.getSelectedItem().getLockState().equals(ControllerConstants.UNLOCKED)) {
+                    int index = this.tableView.getSelectionModel().getSelectedIndex();
+                    Treatment treatment = this.tableviewContent.get(index);
 
-                  treatmentWindow(treatment);
-              }else {
-                  selectionModel.select(null);
-                  Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                  alert.setTitle("Information");
-                  alert.setHeaderText("Diese Behandlung ist gesperrt!");
-                  alert.setContentText("Entsperre die Behandlung, um Änderungen vorzunehmen!");
-                  alert.showAndWait();
-              }
+                    treatmentWindow(treatment);
+                } else {
+                    selectionModel.select(null);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
+                    alert.setHeaderText("Diese Behandlung ist gesperrt!");
+                    alert.setContentText("Entsperre die Behandlung, um Änderungen vorzunehmen!");
+                    alert.showAndWait();
+                }
 
             }
         });
@@ -234,30 +253,36 @@ public class AllTreatmentController {
 
 
     public void handleLockTreatment() {
-        lockFunction(LockConstants.LOCKED);
+        lockFunction(ControllerConstants.LOCKED);
+
 
     }
 
     public void handleUnlockTreatment() {
-        lockFunction(LockConstants.UNLOCKED);
+        lockFunction(ControllerConstants.UNLOCKED);
     }
 
     private void lockFunction(String constant) {
-        try {
-            int index = this.tableView.getSelectionModel().getSelectedIndex();
-            Treatment treatment = this.tableviewContent.get(index);
-            treatment.setLockState(constant);
-            TreatmentDAO dao = DAOFactory.getDAOFactory().createTreatmentDAO();
+        int index = this.tableView.getSelectionModel().getSelectedIndex();
+        Treatment treatment = this.tableviewContent.get(index);
+        treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
+        if (!constant.equals(treatment.getLockState())) {
             try {
-                dao.update(treatment);
+                treatment.setLockState(constant);
+                treatment.setLockDate(LocalDate.now().toString());
+                treatmentDAO.update(treatment);
+
             } catch (SQLException e) {
-                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
+                alert.setHeaderText("Es muss zuerst eine Behandlung ausgewählt werden!");
+                alert.showAndWait();
             }
             readAllAndShowInTableView();
-        } catch (RuntimeException e) {
+        } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information");
-            alert.setHeaderText("Es muss zuerst eine Behandlung ausgewählt werden!");
+            alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
+            alert.setHeaderText("Diese Behandlung befindet sich bereits in dem angeklickten Sperrstatus!");
             alert.showAndWait();
         }
     }
