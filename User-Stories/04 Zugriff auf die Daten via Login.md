@@ -20,7 +20,7 @@ Als **Pfleger** möchte ich **mich einloggen können**, um **Zugriff auf die Dat
 2. Erstelle die Login View
 	- `src/main/resources/LoginView.fxml`
 3. Erstelle Controller der Login View
-	- `src/main/java/controller/LoginController.java`
+	- `src/main/java/controller/controller.LoginController.java`
 4. Startseite `MainWindowView.fxml`  durch `LoginView.fxml` ersetzen.
 	- In der Methode `mainWindow()` der Klasse `Main` .
 5. `MainWindowView`  mit einem Log-out Button erweitern.

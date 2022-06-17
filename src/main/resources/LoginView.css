@@ -1,0 +1,19 @@
+
+
+#login-text{
+    -fx-font-family: Bahnschrift;
+    -fx-font-size: 36;
+    -fx-font-weight: bold;
+}
+
+#password-text{
+    -fx-font-family: Bahnschrift;
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+}
+
+#user-name-text{
+    -fx-font-family: Bahnschrift;
+        -fx-font-size: 18;
+    -fx-font-weight: bold;
+}
