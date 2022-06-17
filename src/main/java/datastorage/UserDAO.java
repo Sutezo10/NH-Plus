@@ -14,36 +14,45 @@ public class UserDAO extends DAOimp<User> {
 
     @Override
     protected String getCreateStatementString(User user) {
-        return null;
+        return String.format("INSERT INTO user (username, password) VALUES ('%s', '%s')",
+                user.getUserName(), user.getPassword());
     }
 
     @Override
-    protected String getReadByIDStatementString(long key) {
-        return null;
+    protected String getReadByIDStatementString(long username) {
+        return String.format("SELECT * FROM user WHERE username = %d", username);
     }
 
     @Override
-    protected User getInstanceFromResultSet(ResultSet set) throws SQLException {
-        return null;
+    protected User getInstanceFromResultSet(ResultSet result) throws SQLException {
+        User p = null;
+        p = new User(result.getString(1), result.getString(2));
+        return p;
     }
 
     @Override
     protected String getReadAllStatementString() {
-        return null;
+        return "SELECT * FROM user";
     }
 
     @Override
-    protected ArrayList<User> getListFromResultSet(ResultSet set) throws SQLException {
-        return null;
+    protected ArrayList<User> getListFromResultSet(ResultSet result) throws SQLException {
+        ArrayList<User> list = new ArrayList<User>();
+        User p = null;
+        while (result.next()) {
+            p = new User(result.getString(1), result.getString(2));
+            list.add(p);
+        }
+        return list;
     }
 
     @Override
     protected String getUpdateStatementString(User user) {
-        return null;
+        return String.format("UPDATE user SET username = '%s', password = '%s'", user.getUserName(), user.getPassword());
     }
 
     @Override
-    protected String getDeleteStatementString(long key) {
-        return null;
+    protected String getDeleteStatementString(long username) {
+        return String.format("Delete FROM patient WHERE username=%d", username);
     }
 }

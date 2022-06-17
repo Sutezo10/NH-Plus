@@ -4,9 +4,13 @@ import datastorage.ConnectionBuilder;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -15,6 +19,7 @@ import java.io.IOException;
 public class Main extends Application {
 
     public static Stage primaryStage;
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -46,6 +51,8 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
+
+
 
     public static void main(String[] args) {
         launch(args);

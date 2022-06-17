@@ -24,7 +24,7 @@
     <Label id = "user-name-text" text="User Name:"
            GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
-    <TextField
+    <TextField fx:id="usernameField"
             GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
     <Label id= "password-text" text="Passwort:"
