@@ -1,3 +1,8 @@
-/*C3*/SET SCHEMA PUBLIC
-DELETE FROM TREATMENT WHERE TID=20
-COMMIT
+/*C7*/SET SCHEMA PUBLIC
+set schema PUBLIC
+alter table CARETAKER\u000a    alter column CID set not null
+alter table CARETAKER\u000a    alter column CID identity
+create unique index CARETAKER_CID_UINDEX\u000a    on CARETAKER (CID)
+alter table CARETAKER\u000a    add constraint CARETAKER_PK\u000a        primary key (CID)
+/*C8*/SET SCHEMA PUBLIC
+DISCONNECT
