@@ -59,7 +59,7 @@ public class CaretakerDAO<T> extends DAOimp<Caretaker> {
 
     @Override
     protected String getDeleteStatementString(long key) {
-        return null;
+        return String.format("Delete FROM caretaker WHERE cid=%d", key);
     }
 }
 

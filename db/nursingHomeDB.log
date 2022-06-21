@@ -1,9 +1,8 @@
-/*C3*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C5*/SET SCHEMA PUBLIC
-set schema PUBLIC
-create table CARETAKER\u000a(\u000a    CID         integer,\u000a    FIRSTNAME   VARCHAR(255),\u000a    SURNAME     VARCHAR(255),\u000a    PHONENUMBER longvarchar\u000a)
-/*C6*/SET SCHEMA PUBLIC
-DISCONNECT
 /*C7*/SET SCHEMA PUBLIC
+set schema PUBLIC
+alter table CARETAKER\u000a    alter column CID set not null
+alter table CARETAKER\u000a    alter column CID identity
+create unique index CARETAKER_CID_UINDEX\u000a    on CARETAKER (CID)
+alter table CARETAKER\u000a    add constraint CARETAKER_PK\u000a        primary key (CID)
+/*C8*/SET SCHEMA PUBLIC
 DISCONNECT
