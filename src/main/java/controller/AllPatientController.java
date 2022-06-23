@@ -9,8 +9,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import model.Patient;
+import utils.Alerts;
+import utils.ControllerConstants;
 import utils.DateConverter;
 import datastorage.DAOFactory;
+
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -44,7 +47,7 @@ public class AllPatientController {
     @FXML
     TextField txtFirstname;
     @FXML
-    TextField txtBirthday;
+    DatePicker birthdayPicker;
     @FXML
     TextField txtCarelevel;
     @FXML
@@ -80,57 +83,61 @@ public class AllPatientController {
         this.colRoom.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-
         //Anzeigen der Daten
         this.tableView.setItems(this.tableviewContent);
     }
 
     /**
      * handles new firstname value
+     *
      * @param event event including the value that a user entered into the cell
      */
     @FXML
-    public void handleOnEditFirstname(TableColumn.CellEditEvent<Patient, String> event){
+    public void handleOnEditFirstname(TableColumn.CellEditEvent<Patient, String> event) {
         event.getRowValue().setFirstName(event.getNewValue());
         doUpdate(event);
     }
 
     /**
      * handles new surname value
+     *
      * @param event event including the value that a user entered into the cell
      */
     @FXML
-    public void handleOnEditSurname(TableColumn.CellEditEvent<Patient, String> event){
+    public void handleOnEditSurname(TableColumn.CellEditEvent<Patient, String> event) {
         event.getRowValue().setSurname(event.getNewValue());
         doUpdate(event);
     }
 
     /**
      * handles new birthdate value
+     *
      * @param event event including the value that a user entered into the cell
      */
     @FXML
-    public void handleOnEditDateOfBirth(TableColumn.CellEditEvent<Patient, String> event){
+    public void handleOnEditDateOfBirth(TableColumn.CellEditEvent<Patient, String> event) {
         event.getRowValue().setDateOfBirth(event.getNewValue());
         doUpdate(event);
     }
 
     /**
      * handles new carelevel value
+     *
      * @param event event including the value that a user entered into the cell
      */
     @FXML
-    public void handleOnEditCareLevel(TableColumn.CellEditEvent<Patient, String> event){
+    public void handleOnEditCareLevel(TableColumn.CellEditEvent<Patient, String> event) {
         event.getRowValue().setCareLevel(event.getNewValue());
         doUpdate(event);
     }
 
     /**
      * handles new roomnumber value
+     *
      * @param event event including the value that a user entered into the cell
      */
     @FXML
-    public void handleOnEditRoomnumber(TableColumn.CellEditEvent<Patient, String> event){
+    public void handleOnEditRoomnumber(TableColumn.CellEditEvent<Patient, String> event) {
         event.getRowValue().setRoomnumber(event.getNewValue());
         doUpdate(event);
     }
@@ -143,6 +150,7 @@ public class AllPatientController {
 
     /**
      * updates a patient by calling the update-Method in the {@link PatientDAO}
+     *
      * @param t row to be updated by the user (includes the patient)
      */
     private void doUpdate(TableColumn.CellEditEvent<Patient, String> t) {
@@ -193,27 +201,26 @@ public class AllPatientController {
     public void handleAdd() {
         String surname = this.txtSurname.getText();
         String firstname = this.txtFirstname.getText();
-        String birthday = this.txtBirthday.getText();
-        LocalDate date = DateConverter.convertStringToLocalDate(birthday);
+        LocalDate date = birthdayPicker.getValue();
         String carelevel = this.txtCarelevel.getText();
         String room = this.txtRoom.getText();
         try {
-            Patient p = new Patient(firstname, surname, date, carelevel, room);
-            dao.create(p);
-        } catch (SQLException e) {
-            e.printStackTrace();
+                Patient p = new Patient(firstname, surname, date, carelevel, room);
+                dao.create(p);
+        } catch (Exception e) {
+            Alerts.wrongOrFalseDataAlert();
         }
         readAllAndShowInTableView();
-        clearTextfields();
+        clearAllFields();
     }
 
     /**
-     * removes content from all textfields
+     * removes content from all fields
      */
-    private void clearTextfields() {
+    private void clearAllFields() {
         this.txtFirstname.clear();
         this.txtSurname.clear();
-        this.txtBirthday.clear();
+        this.birthdayPicker.getEditor().clear();
         this.txtCarelevel.clear();
         this.txtRoom.clear();
     }

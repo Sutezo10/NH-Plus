@@ -8,6 +8,8 @@ import java.time.LocalTime;
 public class Treatment {
     private long tid;
     private long pid;
+
+    private long cid;
     private LocalDate date;
     private LocalTime begin;
     private LocalTime end;
@@ -17,7 +19,7 @@ public class Treatment {
 
     private LocalDate lockDate;
 
-    public Treatment(long pid, LocalDate date, LocalTime begin,
+    public Treatment(long pid, long cid, LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks, String lockState, LocalDate lockDate) {
         this.pid = pid;
         this.date = date;
@@ -27,9 +29,10 @@ public class Treatment {
         this.remarks = remarks;
         this.lockState = lockState;
         this.lockDate = lockDate;
+        this.cid = cid;
     }
 
-    public Treatment(long tid, long pid, LocalDate date, LocalTime begin,
+    public Treatment(long tid, long pid, long cid, LocalDate date, LocalTime begin,
                      LocalTime end, String description, String remarks, String lockState, LocalDate lockDate) {
         this.tid = tid;
         this.pid = pid;
@@ -40,6 +43,7 @@ public class Treatment {
         this.remarks = remarks;
         this.lockState = lockState;
         this.lockDate = lockDate;
+        this.cid = cid;
     }
 
     public long getTid() {
@@ -107,6 +111,14 @@ public class Treatment {
         this.lockDate = DateConverter.convertStringToLocalDate(lockDate);
     }
 
+    public long getCid() {
+        return cid;
+    }
+
+    public void setCid(long cid) {
+        this.cid = cid;
+    }
+
     public String toString() {
         return "\nBehandlung" + "\nTID: " + this.tid +
                 "\nPID: " + this.pid +
@@ -115,6 +127,7 @@ public class Treatment {
                 "\nEnd: " + this.end +
                 "\nDescription: " + this.description +
                 "\nRemarks: " + this.remarks +
-                "\nLockState: " + this.lockState;
+                "\nLockState: " + this.lockState +
+                "\nCID: " + this.cid;
     }
 }

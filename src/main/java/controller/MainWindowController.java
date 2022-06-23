@@ -2,7 +2,6 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -10,8 +9,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class MainWindowController {
 
@@ -48,7 +45,7 @@ public class MainWindowController {
         userInfo.setFill(Color.WHITE);
     }
 
-
+    @FXML
     public void handleLogout() {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/LoginView.fxml"));
         try {
@@ -58,5 +55,13 @@ public class MainWindowController {
         }
     }
 
-
+    @FXML
+    public void handleShowAllCaregiver() {
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/AllCaregiverView.fxml"));
+        try {
+            mainBorderPane.setCenter(loader.load());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

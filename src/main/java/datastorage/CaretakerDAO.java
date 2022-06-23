@@ -1,24 +1,24 @@
 package datastorage;
 
 import model.Caretaker;
-import utils.DateConverter;
 
-import javax.swing.text.Caret;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class CaretakerDAO<T> extends DAOimp<Caretaker> {
+public class CaretakerDAO extends DAOimp<Caretaker> {
+
+    public static final long DELETE_ID = -10000;
+
     public CaretakerDAO(Connection conn) {
         super(conn);
-        }
+    }
 
     @Override
     protected String getCreateStatementString(Caretaker caretaker) {
-        return String.format("INSERT INTO caretaker (cid, firstname, surname, phonenumber) VALUES ('%s', '%s', '%s', '%s')",
-                caretaker.getCid(), caretaker.getFirstName(), caretaker.getSurname(), caretaker.getPhoneNumber());
+        return String.format("INSERT INTO caretaker (firstname, surname, phonenumber) VALUES ( '%s', '%s', '%s')",
+                caretaker.getFirstName(), caretaker.getSurname(), caretaker.getPhoneNumber());
     }
 
     @Override
@@ -29,8 +29,8 @@ public class CaretakerDAO<T> extends DAOimp<Caretaker> {
     @Override
     protected Caretaker getInstanceFromResultSet(ResultSet result) throws SQLException {
         Caretaker c = null;
-        c = new Caretaker(result.getString(1), result.getString(2),
-                result.getInt(3), result.getLong(4));
+        c = new Caretaker(result.getString(2), result.getString(3),
+                result.getLong(1), result.getString(4));
         return c;
     }
 
@@ -44,8 +44,8 @@ public class CaretakerDAO<T> extends DAOimp<Caretaker> {
         ArrayList<Caretaker> list = new ArrayList<Caretaker>();
         Caretaker c = null;
         while (result.next()) {
-            c = new Caretaker(result.getString(1), result.getString(2),
-                    result.getInt(3), result.getLong(4));
+            c = new Caretaker(result.getString(2), result.getString(3),
+                    result.getLong(1), result.getString(4));
             list.add(c);
         }
         return list;
@@ -53,8 +53,8 @@ public class CaretakerDAO<T> extends DAOimp<Caretaker> {
 
     @Override
     protected String getUpdateStatementString(Caretaker caretaker) {
-        return String.format("UPDATE caretaker SET firstname = '%s', surname = '%s', phonenumber = '%s', " +
-                "WHERE cid = %d", caretaker.getFirstName(), caretaker.getSurname(), caretaker.getCid(), caretaker.getPhoneNumber());
+        return String.format("UPDATE caretaker SET firstname = '%s', surname = '%s', phonenumber = '%s' " +
+                "WHERE cid=%d", caretaker.getFirstName(), caretaker.getSurname(), caretaker.getPhoneNumber(), caretaker.getCid());
     }
 
     @Override

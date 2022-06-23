@@ -8,7 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import model.User;
+import utils.ControllerConstants;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -69,32 +72,16 @@ public class LoginController {
         controller.setUserText();
     }
 
-    private void alertUsernameNotFound() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
-        alert.setHeaderText("User wurde nicht gefunden!");
-        alert.setContentText("Es wurde kein User mit diesem Username gefunden!");
-        alert.showAndWait();
-    }
 
-    private void alertPasswordNotCorrect() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
-        alert.setHeaderText("Falsches Passwort!");
-        alert.setContentText("Das eingegebene Passwort ist falsch!");
-        alert.showAndWait();
-    }
-
-    private void alertNoInputs() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
-        alert.setHeaderText("Felder wurden nicht ausgefüllt!");
-        alert.setContentText("Fülle beide Felder mit deinen Daten aus!");
-        alert.showAndWait();
-    }
 
 
     public static String getLoggedInUser() {
         return loggedInUser;
+    }
+
+    public void handleKeyPressed(KeyEvent keyEvent) {
+        if (keyEvent.getCode().equals(KeyCode.ENTER)){
+            handleLoginButtonAction();
+        }
     }
 }

@@ -1,8 +1,10 @@
 package controller;
 
+import datastorage.CaretakerDAO;
 import datastorage.DAOFactory;
 import datastorage.PatientDAO;
 import datastorage.TreatmentDAO;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,8 +14,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.Caretaker;
 import model.Patient;
 import model.Treatment;
+import utils.Alerts;
+import utils.ControllerConstants;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,6 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllTreatmentController {
+
+    @FXML
+    private TableColumn<Treatment, String> colCid;
     @FXML
     private TableView<Treatment> tableView;
     @FXML
@@ -54,6 +62,7 @@ public class AllTreatmentController {
     private final ObservableList<Treatment> tableviewContent =
             FXCollections.observableArrayList();
     private TreatmentDAO treatmentDAO;
+    private CaretakerDAO caretakerDAO;
 
     private final ObservableList<String> myComboBoxData =
             FXCollections.observableArrayList();
@@ -61,6 +70,7 @@ public class AllTreatmentController {
 
 
     public void initialize() {
+        caretakerDAO = DAOFactory.getDAOFactory().createCaretakerDAO();
         createComboBoxData();
         checkLockedData();
         readAllAndShowInTableView();
@@ -75,6 +85,24 @@ public class AllTreatmentController {
         this.colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         this.colLockState.setCellValueFactory(new PropertyValueFactory<>("lockState"));
         this.colLockDate.setCellValueFactory(new PropertyValueFactory<>("lockDate"));
+        this.colCid.setCellValueFactory(cellDataFeatures -> {
+            try {
+                Caretaker c = caretakerDAO.read(cellDataFeatures.getValue().getCid());
+                return (c.getCid() != CaretakerDAO.DELETE_ID) ?
+                        new SimpleStringProperty(String.format("%-15s %s", "\uD83D\uDC66: " + c.getSurname(), " 📞: " + c.getPhoneNumber())) :
+                        new SimpleStringProperty(c.getSurname());
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(ControllerConstants.ALERT_ERROR_TITLE);
+                alert.setHeaderText("Fehler beim laden der Pfleger-ID!");
+                alert.setContentText("Beim Laden der Informationen vom Pfleger ist ein Fehler aufgetreten");
+                alert.showAndWait();
+                return new SimpleStringProperty("-");
+            }
+
+        });
         this.tableView.setItems(this.tableviewContent);
     }
 
@@ -152,6 +180,7 @@ public class AllTreatmentController {
         }
     }
 
+
     private Patient searchInList(String surname) {
         for (Patient patient : this.patientList) {
             if (patient.getSurname().equals(surname)) {
@@ -180,11 +209,7 @@ public class AllTreatmentController {
             Patient patient = searchInList(p);
             newTreatmentWindow(patient);
         } catch (NullPointerException e) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
-            alert.setHeaderText("Patient für die Behandlung fehlt!");
-            alert.setContentText("Wählen Sie über die Combobox einen Patienten aus!");
-            alert.showAndWait();
+            Alerts.missingPatientAlert();
         }
     }
 
@@ -200,11 +225,7 @@ public class AllTreatmentController {
                     treatmentWindow(treatment);
                 } else {
                     selectionModel.select(null);
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
-                    alert.setHeaderText("Diese Behandlung ist gesperrt!");
-                    alert.setContentText("Entsperre die Behandlung, um Änderungen vorzunehmen!");
-                    alert.showAndWait();
+                    Alerts.lockedTreatmentAlert();
                 }
 
             }
@@ -226,7 +247,6 @@ public class AllTreatmentController {
             stage.setResizable(false);
             stage.showAndWait();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -246,7 +266,6 @@ public class AllTreatmentController {
             stage.setResizable(false);
             stage.showAndWait();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -273,17 +292,11 @@ public class AllTreatmentController {
                 treatmentDAO.update(treatment);
 
             } catch (SQLException e) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
-                alert.setHeaderText("Es muss zuerst eine Behandlung ausgewählt werden!");
-                alert.showAndWait();
+                Alerts.noSelectionToLockAlert();
             }
             readAllAndShowInTableView();
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
-            alert.setHeaderText("Diese Behandlung befindet sich bereits in dem angeklickten Sperrstatus!");
-            alert.showAndWait();
+            Alerts.sameLockStateAlert();
         }
     }
 }
