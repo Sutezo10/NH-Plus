@@ -14,16 +14,9 @@ public class Patient extends Person {
     private String careLevel;
     private String roomnumber;
 
-    private List<Treatment> allTreatments = new ArrayList<Treatment>();
+    private final List<Treatment> allTreatments = new ArrayList<>();
 
-    /**
-     * constructs a patient from the given params.
-     * @param firstName
-     * @param surname
-     * @param dateOfBirth
-     * @param careLevel
-     * @param roomnumber
-     */
+
     public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomnumber) {
         super(firstName, surname);
         this.dateOfBirth = dateOfBirth;
@@ -31,15 +24,7 @@ public class Patient extends Person {
         this.roomnumber = roomnumber;
     }
 
-    /**
-     * constructs a patient from the given params.
-     * @param pid
-     * @param firstName
-     * @param surname
-     * @param dateOfBirth
-     * @param careLevel
-     * @param roomnumber
-     */
+
     public Patient(long pid, String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomnumber) {
         super(firstName, surname);
         this.pid = pid;
@@ -69,8 +54,7 @@ public class Patient extends Person {
      * @param dateOfBirth as string in the following format: YYYY-MM-DD
      */
     public void setDateOfBirth(String dateOfBirth) {
-        LocalDate birthday = DateConverter.convertStringToLocalDate(dateOfBirth);
-        this.dateOfBirth = birthday;
+        this.dateOfBirth = DateConverter.convertStringToLocalDate(dateOfBirth);
     }
 
     /**
@@ -99,7 +83,6 @@ public class Patient extends Person {
 
     /**
      *
-     * @param roomnumber
      */
     public void setRoomnumber(String roomnumber) {
         this.roomnumber = roomnumber;

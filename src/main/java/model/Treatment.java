@@ -7,7 +7,7 @@ import java.time.LocalTime;
 
 public class Treatment {
     private long tid;
-    private long pid;
+    private final long pid;
 
     private long cid;
     private LocalDate date;
@@ -66,8 +66,8 @@ public class Treatment {
         return end.toString();
     }
 
-    public void setDate(String s_date) {
-        this.date = DateConverter.convertStringToLocalDate(s_date);
+    public void setDate(String date) {
+        this.date = DateConverter.convertStringToLocalDate(date);
     }
 
     public void setBegin(String begin) {

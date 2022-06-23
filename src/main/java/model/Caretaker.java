@@ -22,10 +22,6 @@ public class Caretaker extends Person {
         return cid;
     }
 
-    public void setCid(long cid) {
-        this.cid = cid;
-    }
-
 
     public String getPhoneNumber() {
         return phoneNumber;

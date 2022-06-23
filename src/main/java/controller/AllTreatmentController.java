@@ -62,7 +62,6 @@ public class AllTreatmentController {
     private final ObservableList<Treatment> tableviewContent =
             FXCollections.observableArrayList();
     private TreatmentDAO treatmentDAO;
-    private CaretakerDAO caretakerDAO;
 
     private final ObservableList<String> myComboBoxData =
             FXCollections.observableArrayList();
@@ -70,7 +69,7 @@ public class AllTreatmentController {
 
 
     public void initialize() {
-        caretakerDAO = DAOFactory.getDAOFactory().createCaretakerDAO();
+        CaretakerDAO caretakerDAO = DAOFactory.getDAOFactory().createCaretakerDAO();
         createComboBoxData();
         checkLockedData();
         readAllAndShowInTableView();
@@ -143,10 +142,8 @@ public class AllTreatmentController {
                 int treatmentDateYear = treatment.getLockDate().getYear();
                 int treatmentDateMonth = treatment.getLockDate().getMonthValue();
                 int treatmentDateDay = treatment.getLockDate().getDayOfMonth();
-                if (dateYear - treatmentDateYear >= 10 && treatment.getLockState().equals(ControllerConstants.LOCKED)) {
-                    if (dateMonth >= treatmentDateMonth && dateDay >= treatmentDateDay) {
-                        treatmentDAO.deleteById(treatment.getTid());
-                    }
+                if ((dateYear - treatmentDateYear >= 10 && treatment.getLockState().equals(ControllerConstants.LOCKED)) && (dateMonth >= treatmentDateMonth && dateDay >= treatmentDateDay)) {
+                    treatmentDAO.deleteById(treatment.getTid());
                 }
             }
         } catch (SQLException e) {
@@ -283,21 +280,26 @@ public class AllTreatmentController {
 
     private void lockFunction(String constant) {
         int index = this.tableView.getSelectionModel().getSelectedIndex();
-        Treatment treatment = this.tableviewContent.get(index);
-        treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
-        if (!constant.equals(treatment.getLockState())) {
-            try {
-                treatment.setLockState(constant);
-                treatment.setLockDate(LocalDate.now().toString());
-                treatmentDAO.update(treatment);
+        if (index > 0) {
+            Treatment treatment = this.tableviewContent.get(index);
+            treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
+            if (!constant.equals(treatment.getLockState())) {
+                try {
+                    treatment.setLockState(constant);
+                    treatment.setLockDate(LocalDate.now().toString());
+                    treatmentDAO.update(treatment);
 
-            } catch (SQLException e) {
-                Alerts.noSelectionToLockAlert();
+                } catch (SQLException e) {
+                    Alerts.noSelectionToLockAlert();
+                }
+                readAllAndShowInTableView();
+            } else {
+                Alerts.sameLockStateAlert();
             }
-            readAllAndShowInTableView();
         } else {
-            Alerts.sameLockStateAlert();
+            Alerts.noSelectionToLockAlert();
         }
+
     }
 }
 

@@ -4,6 +4,9 @@ import javafx.scene.control.Alert;
 
 public class Alerts {
 
+    /**
+     * General Alerts
+     */
     public static Alert wrongOrFalseDataAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(ControllerConstants.ALERT_ERROR_TITLE);
@@ -41,7 +44,9 @@ public class Alerts {
         alert.setHeaderText("Es muss zuerst eine Behandlung ausgewählt werden!");
         alert.showAndWait();
         return alert;
-    }  public static Alert sameLockStateAlert() {
+    }
+
+    public static Alert sameLockStateAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
         alert.setHeaderText("Diese Behandlung befindet sich bereits in dem angeklickten Sperrstatus!");
@@ -72,12 +77,13 @@ public class Alerts {
         return alert;
     }
 
-    private void alertNoInputs() {
+    public static Alert alertNoInputs() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
         alert.setHeaderText("Felder wurden nicht ausgefüllt!");
         alert.setContentText("Fülle beide Felder mit deinen Daten aus!");
         alert.showAndWait();
+        return alert;
     }
 
 }

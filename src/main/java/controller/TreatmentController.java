@@ -22,7 +22,7 @@ import java.util.Optional;
 
 public class TreatmentController {
     @FXML
-    public ComboBox cmbxCaretaker;
+    public ComboBox<String> comboCaretaker;
     @FXML
     private Label lblPatientName;
     @FXML
@@ -76,8 +76,8 @@ public class TreatmentController {
         this.txtDescription.setText(this.treatment.getDescription());
         this.taRemarks.setText(this.treatment.getRemarks());
         createComboBoxData();
-        cmbxCaretaker.setItems(myComboBoxData);
-        cmbxCaretaker.getSelectionModel().select(0);
+        comboCaretaker.setItems(myComboBoxData);
+        comboCaretaker.getSelectionModel().select(0);
     }
 
     private void createComboBoxData() {
@@ -104,7 +104,7 @@ public class TreatmentController {
         Optional<Caretaker> caretaker;
         try {
             List<Caretaker> caretakerList = caretakerDAO.readAll();
-            caretaker = caretakerList.stream().filter(c -> c.getSurname().equals(cmbxCaretaker.getSelectionModel().getSelectedItem())).findAny();
+            caretaker = caretakerList.stream().filter(c -> c.getSurname().equals(comboCaretaker.getSelectionModel().getSelectedItem())).findAny();
             caretaker.ifPresent(value -> this.treatment.setCid(value.getCid()));
 
         } catch (SQLException e) {

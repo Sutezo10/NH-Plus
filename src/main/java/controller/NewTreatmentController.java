@@ -85,6 +85,7 @@ public class NewTreatmentController {
         try {
             LocalTime begin = DateConverter.convertStringToLocalTime(txtBegin.getText());
             LocalTime end = DateConverter.convertStringToLocalTime(txtEnd.getText());
+            assert caretaker != null;
             Treatment treatment = new Treatment(patient.getPid(), caretaker.getCid(), date,
                     begin, end, description, remarks, ControllerConstants.UNLOCKED, LocalDate.now());
             createTreatment(treatment);

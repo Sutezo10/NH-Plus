@@ -6,12 +6,15 @@ import datastorage.TreatmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import model.Caretaker;
 import model.Treatment;
-import utils.ControllerConstants;
+import utils.Alerts;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -40,21 +43,20 @@ public class AllCaretakerController {
     public Button btnDelete;
 
 
-    private ObservableList<Caretaker> tableviewContent = FXCollections.observableArrayList();
+    private final ObservableList<Caretaker> tableviewContent = FXCollections.observableArrayList();
     private CaretakerDAO caretakerDAO;
-    private TreatmentDAO treatmentDAO;
 
     public void initialize() {
-        this.colFirstName.setCellValueFactory(new PropertyValueFactory<Caretaker, String>("firstName"));
+        this.colFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         this.colFirstName.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colSurname.setCellValueFactory(new PropertyValueFactory<Caretaker, String>("surname"));
+        this.colSurname.setCellValueFactory(new PropertyValueFactory<>("surname"));
         this.colSurname.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colTelephone.setCellValueFactory(new PropertyValueFactory<Caretaker, String>("phoneNumber"));
+        this.colTelephone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         this.colTelephone.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colID.setCellValueFactory(new PropertyValueFactory<Caretaker, Integer>("cid"));
+        this.colID.setCellValueFactory(new PropertyValueFactory<>("cid"));
 
         this.tableView.setItems(tableviewContent);
         readAllAndShowInTableView();
@@ -100,11 +102,7 @@ public class AllCaretakerController {
             readAllAndShowInTableView();
             clearTextfields();
         } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
-            alert.setHeaderText("Fehlende Daten!");
-            alert.setContentText("Es müssen alle Felder befüllt werden, um einen neuen Pfleger zu erstellen!");
-            alert.showAndWait();
+            Alerts.wrongOrFalseDataAlert();
         }
     }
 
@@ -113,7 +111,7 @@ public class AllCaretakerController {
         Caretaker selectedItem = this.tableView.getSelectionModel().getSelectedItem();
         try {
             this.caretakerDAO = DAOFactory.getDAOFactory().createCaretakerDAO();
-            this.treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
+            TreatmentDAO treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
             List<Treatment> allTreatments = treatmentDAO.readAll();
             for (Treatment t : allTreatments) {
                 if (t.getCid() == selectedItem.getCid()) {

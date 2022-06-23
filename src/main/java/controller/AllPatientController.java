@@ -1,5 +1,6 @@
 package controller;
 
+import datastorage.DAOFactory;
 import datastorage.PatientDAO;
 import datastorage.TreatmentDAO;
 import javafx.collections.FXCollections;
@@ -10,9 +11,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import model.Patient;
 import utils.Alerts;
-import utils.ControllerConstants;
-import utils.DateConverter;
-import datastorage.DAOFactory;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -54,7 +52,7 @@ public class AllPatientController {
     TextField txtRoom;
 
 
-    private ObservableList<Patient> tableviewContent = FXCollections.observableArrayList();
+    private final ObservableList<Patient> tableviewContent = FXCollections.observableArrayList();
     private PatientDAO dao;
 
     /**
@@ -63,23 +61,23 @@ public class AllPatientController {
     public void initialize() {
         readAllAndShowInTableView();
 
-        this.colID.setCellValueFactory(new PropertyValueFactory<Patient, Integer>("pid"));
+        this.colID.setCellValueFactory(new PropertyValueFactory<>("pid"));
 
         //CellValuefactory zum Anzeigen der Daten in der TableView
-        this.colFirstName.setCellValueFactory(new PropertyValueFactory<Patient, String>("firstName"));
+        this.colFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         //CellFactory zum Schreiben innerhalb der Tabelle
         this.colFirstName.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colSurname.setCellValueFactory(new PropertyValueFactory<Patient, String>("surname"));
+        this.colSurname.setCellValueFactory(new PropertyValueFactory<>("surname"));
         this.colSurname.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colDateOfBirth.setCellValueFactory(new PropertyValueFactory<Patient, String>("dateOfBirth"));
+        this.colDateOfBirth.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
         this.colDateOfBirth.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colCareLevel.setCellValueFactory(new PropertyValueFactory<Patient, String>("careLevel"));
+        this.colCareLevel.setCellValueFactory(new PropertyValueFactory<>("careLevel"));
         this.colCareLevel.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        this.colRoom.setCellValueFactory(new PropertyValueFactory<Patient, String>("roomnumber"));
+        this.colRoom.setCellValueFactory(new PropertyValueFactory<>("roomnumber"));
         this.colRoom.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
@@ -142,11 +140,6 @@ public class AllPatientController {
         doUpdate(event);
     }
 
-    /**
-     * handles new asset value
-     * @param event event including the value that a user entered into the cell
-     */
-
 
     /**
      * updates a patient by calling the update-Method in the {@link PatientDAO}
@@ -170,9 +163,7 @@ public class AllPatientController {
         List<Patient> allPatients;
         try {
             allPatients = dao.readAll();
-            for (Patient p : allPatients) {
-                this.tableviewContent.add(p);
-            }
+            this.tableviewContent.addAll(allPatients);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -185,13 +176,18 @@ public class AllPatientController {
     public void handleDeleteRow() {
         TreatmentDAO tDao = DAOFactory.getDAOFactory().createTreatmentDAO();
         Patient selectedItem = this.tableView.getSelectionModel().getSelectedItem();
-        try {
-            tDao.deleteByPid(selectedItem.getPid());
-            dao.deleteById(selectedItem.getPid());
-            this.tableView.getItems().remove(selectedItem);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (selectedItem == null){
+            try {
+                tDao.deleteByPid(selectedItem.getPid());
+                dao.deleteById(selectedItem.getPid());
+                this.tableView.getItems().remove(selectedItem);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else {
+            //TODO Information Alert --> keine Auswahl getroffen
         }
+
     }
 
     /**
@@ -205,8 +201,8 @@ public class AllPatientController {
         String carelevel = this.txtCarelevel.getText();
         String room = this.txtRoom.getText();
         try {
-                Patient p = new Patient(firstname, surname, date, carelevel, room);
-                dao.create(p);
+            Patient p = new Patient(firstname, surname, date, carelevel, room);
+            dao.create(p);
         } catch (Exception e) {
             Alerts.wrongOrFalseDataAlert();
         }

@@ -48,8 +48,8 @@ public class TreatmentDAO extends DAOimp<Treatment> {
 
     @Override
     protected ArrayList<Treatment> getListFromResultSet(ResultSet result) throws SQLException {
-        ArrayList<Treatment> list = new ArrayList<Treatment>();
-        Treatment t = null;
+        ArrayList<Treatment> list = new ArrayList<>();
+        Treatment t;
         while (result.next()) {
             LocalDate date = DateConverter.convertStringToLocalDate(result.getString(3));
             LocalDate lockDate = DateConverter.convertStringToLocalDate(result.getString(9));
@@ -76,8 +76,7 @@ public class TreatmentDAO extends DAOimp<Treatment> {
     }
 
     public List<Treatment> readTreatmentsByPid(long pid) throws SQLException {
-        ArrayList<Treatment> list = new ArrayList<Treatment>();
-        Treatment object = null;
+        ArrayList<Treatment> list;
         Statement st = conn.createStatement();
         ResultSet result = st.executeQuery(getReadAllTreatmentsOfOnePatientByPid(pid));
         list = getListFromResultSet(result);

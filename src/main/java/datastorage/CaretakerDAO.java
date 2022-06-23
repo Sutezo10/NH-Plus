@@ -28,7 +28,7 @@ public class CaretakerDAO extends DAOimp<Caretaker> {
 
     @Override
     protected Caretaker getInstanceFromResultSet(ResultSet result) throws SQLException {
-        Caretaker c = null;
+        Caretaker c;
         c = new Caretaker(result.getString(2), result.getString(3),
                 result.getLong(1), result.getString(4));
         return c;
@@ -41,8 +41,8 @@ public class CaretakerDAO extends DAOimp<Caretaker> {
 
     @Override
     protected ArrayList<Caretaker> getListFromResultSet(ResultSet result) throws SQLException {
-        ArrayList<Caretaker> list = new ArrayList<Caretaker>();
-        Caretaker c = null;
+        ArrayList<Caretaker> list = new ArrayList<>();
+        Caretaker c;
         while (result.next()) {
             c = new Caretaker(result.getString(2), result.getString(3),
                     result.getLong(1), result.getString(4));

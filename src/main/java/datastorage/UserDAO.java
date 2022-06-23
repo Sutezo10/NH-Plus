@@ -25,7 +25,7 @@ public class UserDAO extends DAOimp<User> {
 
     @Override
     protected User getInstanceFromResultSet(ResultSet result) throws SQLException {
-        User p = null;
+        User p;
         p = new User(result.getString(1), result.getString(2));
         return p;
     }
@@ -37,8 +37,8 @@ public class UserDAO extends DAOimp<User> {
 
     @Override
     protected ArrayList<User> getListFromResultSet(ResultSet result) throws SQLException {
-        ArrayList<User> list = new ArrayList<User>();
-        User p = null;
+        ArrayList<User> list = new ArrayList<>();
+        User p;
         while (result.next()) {
             p = new User(result.getString(1), result.getString(2));
             list.add(p);
