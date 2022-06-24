@@ -41,8 +41,8 @@ public class Alerts {
     public static Alert noSelectionToDelete() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
-        alert.setHeaderText("Es wurde kein Patient zum Löschen ausgewählt!");
-        alert.setContentText("Wähle einen Patienten in der Tabelle aus, um diesen zu Löschen!");
+        alert.setHeaderText("Es wurde nichts ausgewählt, was gelöscht werden kann!");
+        alert.setContentText("Wähle eine Zeile in der Tabelle aus, um diese zu Löschen!");
         alert.showAndWait();
         return alert;
     }

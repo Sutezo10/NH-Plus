@@ -17,6 +17,9 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
+import static utils.GeneralCheckMethods.checkLetterInput;
+import static utils.GeneralCheckMethods.checkNumberInput;
+
 
 /**
  * The <code>AllPatientController</code> contains the entire logic of the patient view. It determines which data is displayed and how to react to events.
@@ -98,7 +101,7 @@ public class AllPatientController {
             event.getRowValue().setFirstName(event.getNewValue());
             doUpdate(event);
         } else {
-            Alerts.wrongDataAlert();
+            Alerts.wrongOrMissingDataAlert();
             readAllAndShowInTableView();
         }
 
@@ -115,7 +118,7 @@ public class AllPatientController {
             event.getRowValue().setSurname(event.getNewValue());
             doUpdate(event);
         } else {
-            Alerts.wrongDataAlert();
+            Alerts.wrongOrMissingDataAlert();
             readAllAndShowInTableView();
         }
 
@@ -134,7 +137,7 @@ public class AllPatientController {
             event.getRowValue().setDateOfBirth(String.valueOf(lclDate));
             doUpdate(event);
         } catch (Exception e) {
-            Alerts.wrongDataAlert();
+            Alerts.wrongOrMissingDataAlert();
             readAllAndShowInTableView();
         }
     }
@@ -150,7 +153,7 @@ public class AllPatientController {
             event.getRowValue().setCareLevel(event.getNewValue());
             doUpdate(event);
         } else {
-            Alerts.wrongDataAlert();
+            Alerts.wrongOrMissingDataAlert();
             readAllAndShowInTableView();
         }
     }
@@ -166,7 +169,7 @@ public class AllPatientController {
             event.getRowValue().setRoomnumber(event.getNewValue());
             doUpdate(event);
         } else {
-            Alerts.wrongDataAlert();
+            Alerts.wrongOrMissingDataAlert();
             readAllAndShowInTableView();
         }
     }
@@ -246,25 +249,7 @@ public class AllPatientController {
 
     }
 
-    private boolean checkLetterInput(String str) {
-        char[] chars = str.toCharArray();
-        for (char c : chars) {
-            if (!Character.isLetter(c)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
-    private boolean checkNumberInput(String str) {
-        char[] chars = str.toCharArray();
-        for (char c : chars) {
-            if (!Character.isDigit(c)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
 
     /**

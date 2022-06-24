@@ -19,6 +19,9 @@ import utils.Alerts;
 import java.sql.SQLException;
 import java.util.List;
 
+import static utils.GeneralCheckMethods.checkLetterInput;
+import static utils.GeneralCheckMethods.checkNumberInput;
+
 public class AllCaretakerController {
 
     @FXML
@@ -72,18 +75,36 @@ public class AllCaretakerController {
     }
 
     public void handleEditSurname(TableColumn.CellEditEvent<Caretaker, String> event) {
-        event.getRowValue().setSurname(event.getNewValue());
-        doUpdate(event);
+        if (checkLetterInput(event.getNewValue())) {
+            event.getRowValue().setSurname(event.getNewValue());
+            doUpdate(event);
+        } else {
+            Alerts.wrongOrMissingDataAlert();
+            readAllAndShowInTableView();
+        }
+
     }
 
     public void handleEditFirstName(TableColumn.CellEditEvent<Caretaker, String> event) {
-        event.getRowValue().setFirstName(event.getNewValue());
-        doUpdate(event);
+        if (checkLetterInput(event.getNewValue())) {
+            event.getRowValue().setFirstName(event.getNewValue());
+            doUpdate(event);
+        } else {
+            Alerts.wrongOrMissingDataAlert();
+            readAllAndShowInTableView();
+        }
+
     }
 
     public void handleEditTelephone(TableColumn.CellEditEvent<Caretaker, String> event) {
-        event.getRowValue().setPhoneNumber(event.getNewValue());
-        doUpdate(event);
+        if (checkNumberInput(event.getNewValue())) {
+            event.getRowValue().setPhoneNumber(event.getNewValue());
+            doUpdate(event);
+        } else {
+            Alerts.wrongOrMissingDataAlert();
+            readAllAndShowInTableView();
+        }
+
     }
 
     @FXML
@@ -91,7 +112,8 @@ public class AllCaretakerController {
         String surname = this.txfSurname.getText();
         String firstname = this.txfFirstname.getText();
         String telephoneNumber = this.txfTelephone.getText();
-        if (!surname.isEmpty() && !firstname.isEmpty() && !telephoneNumber.isEmpty()) {
+        if ((!surname.isEmpty() && !firstname.isEmpty() && !telephoneNumber.isEmpty()) &&
+                (checkLetterInput(surname) && checkLetterInput(firstname) && checkNumberInput(telephoneNumber))) {
             try {
                 this.caretakerDAO = DAOFactory.getDAOFactory().createCaretakerDAO();
                 Caretaker c = new Caretaker(firstname, surname, telephoneNumber);
@@ -102,29 +124,34 @@ public class AllCaretakerController {
             readAllAndShowInTableView();
             clearTextfields();
         } else {
-            Alerts.missingDataAlert();
+            Alerts.wrongOrMissingDataAlert();
         }
     }
 
     @FXML
     public void handleDeleteCaregiver() {
         Caretaker selectedItem = this.tableView.getSelectionModel().getSelectedItem();
-        try {
-            this.caretakerDAO = DAOFactory.getDAOFactory().createCaretakerDAO();
-            TreatmentDAO treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
-            List<Treatment> allTreatments = treatmentDAO.readAll();
-            for (Treatment t : allTreatments) {
-                if (t.getCid() == selectedItem.getCid()) {
-                    t.setCid(CaretakerDAO.DELETE_ID);
+        if (selectedItem != null) {
+            try {
+                this.caretakerDAO = DAOFactory.getDAOFactory().createCaretakerDAO();
+                TreatmentDAO treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
+                List<Treatment> allTreatments = treatmentDAO.readAll();
+                for (Treatment t : allTreatments) {
+                    if (t.getCid() == selectedItem.getCid()) {
+                        t.setCid(CaretakerDAO.DELETE_ID);
+                    }
+                    treatmentDAO.update(t);
                 }
-                treatmentDAO.update(t);
+                caretakerDAO.deleteById(selectedItem.getCid());
+                readAllAndShowInTableView();
+                this.tableView.getItems().remove(selectedItem);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            caretakerDAO.deleteById(selectedItem.getCid());
-            readAllAndShowInTableView();
-            this.tableView.getItems().remove(selectedItem);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } else {
+            Alerts.noSelectionToDelete();
         }
+
     }
 
     private void readAllAndShowInTableView() {
