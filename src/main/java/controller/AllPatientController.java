@@ -14,6 +14,7 @@ import utils.Alerts;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 
 
@@ -59,6 +60,7 @@ public class AllPatientController {
      * Initializes the corresponding fields. Is called as soon as the corresponding FXML file is to be displayed.
      */
     public void initialize() {
+        birthdayPicker.setValue(LocalDate.of(1970, Month.JANUARY, 1));
         readAllAndShowInTableView();
 
         this.colID.setCellValueFactory(new PropertyValueFactory<>("pid"));
@@ -176,7 +178,7 @@ public class AllPatientController {
     public void handleDeleteRow() {
         TreatmentDAO tDao = DAOFactory.getDAOFactory().createTreatmentDAO();
         Patient selectedItem = this.tableView.getSelectionModel().getSelectedItem();
-        if (selectedItem == null){
+        if (selectedItem != null) {
             try {
                 tDao.deleteByPid(selectedItem.getPid());
                 dao.deleteById(selectedItem.getPid());
@@ -184,8 +186,8 @@ public class AllPatientController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }else {
-            //TODO Information Alert --> keine Auswahl getroffen
+        } else {
+            Alerts.noSelectionToDelete();
         }
 
     }
@@ -204,7 +206,7 @@ public class AllPatientController {
             Patient p = new Patient(firstname, surname, date, carelevel, room);
             dao.create(p);
         } catch (Exception e) {
-            Alerts.wrongOrFalseDataAlert();
+            Alerts.wrongOrMissingDataAlert();
         }
         readAllAndShowInTableView();
         clearAllFields();

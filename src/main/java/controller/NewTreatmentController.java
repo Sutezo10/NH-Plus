@@ -92,7 +92,7 @@ public class NewTreatmentController {
             controller.readAllAndShowInTableView();
             stage.close();
         } catch (Exception e) {
-            Alerts.wrongOrFalseDataAlert();
+            Alerts.wrongOrMissingDataAlert();
         }
     }
 

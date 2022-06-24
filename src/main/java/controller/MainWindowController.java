@@ -3,6 +3,7 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -16,6 +17,13 @@ public class MainWindowController {
     public Text userInfo;
     @FXML
     private BorderPane mainBorderPane;
+
+    public void initialize() {
+        Label startingText = new Label("NH-Plus");
+        startingText.setFont(new Font("Bahnschrift", 36));
+        startingText.setStyle("-fx-font-weight: bold");
+        mainBorderPane.setCenter(startingText);
+    }
 
 
     @FXML

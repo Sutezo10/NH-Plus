@@ -96,13 +96,13 @@ public class AllCaretakerController {
                 this.caretakerDAO = DAOFactory.getDAOFactory().createCaretakerDAO();
                 Caretaker c = new Caretaker(firstname, surname, telephoneNumber);
                 caretakerDAO.create(c);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (Exception e) {
+                Alerts.wrongDataAlert();
             }
             readAllAndShowInTableView();
             clearTextfields();
         } else {
-            Alerts.wrongOrFalseDataAlert();
+            Alerts.missingDataAlert();
         }
     }
 

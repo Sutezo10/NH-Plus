@@ -7,7 +7,7 @@ public class Alerts {
     /**
      * General Alerts
      */
-    public static Alert wrongOrFalseDataAlert() {
+    public static Alert wrongOrMissingDataAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(ControllerConstants.ALERT_ERROR_TITLE);
         alert.setHeaderText("Fehlende/Falsche Daten in den Feldern!");
@@ -16,6 +16,36 @@ public class Alerts {
         return alert;
     }
 
+    public static Alert wrongDataAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(ControllerConstants.ALERT_ERROR_TITLE);
+        alert.setHeaderText("Falsche Daten in den Feldern!");
+        alert.setContentText("Es wurden Felder mit ungültigen Daten befüllt!");
+        alert.showAndWait();
+        return alert;
+    }
+
+    public static Alert missingDataAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(ControllerConstants.ALERT_ERROR_TITLE);
+        alert.setHeaderText("Fehlende Daten in den Feldern!");
+        alert.setContentText("Es wurden nicht alle Felder mit Daten befüllt!");
+        alert.showAndWait();
+        return alert;
+    }
+
+    /**
+     * AllPatient Alerts
+     */
+
+    public static Alert noSelectionToDelete() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
+        alert.setHeaderText("Es wurde kein Patient zum Löschen ausgewählt!");
+        alert.setContentText("Wähle einen Patienten in der Tabelle aus, um diesen zu Löschen!");
+        alert.showAndWait();
+        return alert;
+    }
 
     /**
      * AllTreatment Alerts
