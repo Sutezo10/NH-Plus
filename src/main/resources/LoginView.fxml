@@ -21,7 +21,7 @@
           GridPane.columnIndex="0" GridPane.rowIndex="0"
           GridPane.columnSpan="2"/>
 
-    <Label id = "user-name-text" text="User Name:"
+    <Label id = "user-name-text" text="Username:"
            GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
     <TextField fx:id="usernameField"

@@ -94,8 +94,14 @@ public class AllPatientController {
      */
     @FXML
     public void handleOnEditFirstname(TableColumn.CellEditEvent<Patient, String> event) {
-        event.getRowValue().setFirstName(event.getNewValue());
-        doUpdate(event);
+        if (checkLetterInput(event.getNewValue())) {
+            event.getRowValue().setFirstName(event.getNewValue());
+            doUpdate(event);
+        } else {
+            Alerts.wrongDataAlert();
+            readAllAndShowInTableView();
+        }
+
     }
 
     /**
@@ -105,8 +111,14 @@ public class AllPatientController {
      */
     @FXML
     public void handleOnEditSurname(TableColumn.CellEditEvent<Patient, String> event) {
-        event.getRowValue().setSurname(event.getNewValue());
-        doUpdate(event);
+        if (checkLetterInput(event.getNewValue())) {
+            event.getRowValue().setSurname(event.getNewValue());
+            doUpdate(event);
+        } else {
+            Alerts.wrongDataAlert();
+            readAllAndShowInTableView();
+        }
+
     }
 
     /**
@@ -116,8 +128,15 @@ public class AllPatientController {
      */
     @FXML
     public void handleOnEditDateOfBirth(TableColumn.CellEditEvent<Patient, String> event) {
-        event.getRowValue().setDateOfBirth(event.getNewValue());
-        doUpdate(event);
+        LocalDate lclDate;
+        try {
+            lclDate = LocalDate.parse(event.getNewValue());
+            event.getRowValue().setDateOfBirth(String.valueOf(lclDate));
+            doUpdate(event);
+        } catch (Exception e) {
+            Alerts.wrongDataAlert();
+            readAllAndShowInTableView();
+        }
     }
 
     /**
@@ -127,8 +146,13 @@ public class AllPatientController {
      */
     @FXML
     public void handleOnEditCareLevel(TableColumn.CellEditEvent<Patient, String> event) {
-        event.getRowValue().setCareLevel(event.getNewValue());
-        doUpdate(event);
+        if (checkNumberInput(event.getNewValue())) {
+            event.getRowValue().setCareLevel(event.getNewValue());
+            doUpdate(event);
+        } else {
+            Alerts.wrongDataAlert();
+            readAllAndShowInTableView();
+        }
     }
 
     /**
@@ -138,8 +162,13 @@ public class AllPatientController {
      */
     @FXML
     public void handleOnEditRoomnumber(TableColumn.CellEditEvent<Patient, String> event) {
-        event.getRowValue().setRoomnumber(event.getNewValue());
-        doUpdate(event);
+        if (checkNumberInput(event.getNewValue())) {
+            event.getRowValue().setRoomnumber(event.getNewValue());
+            doUpdate(event);
+        } else {
+            Alerts.wrongDataAlert();
+            readAllAndShowInTableView();
+        }
     }
 
 
@@ -202,15 +231,41 @@ public class AllPatientController {
         LocalDate date = birthdayPicker.getValue();
         String carelevel = this.txtCarelevel.getText();
         String room = this.txtRoom.getText();
-        try {
-            Patient p = new Patient(firstname, surname, date, carelevel, room);
-            dao.create(p);
-        } catch (Exception e) {
-            Alerts.wrongOrMissingDataAlert();
+        if (checkLetterInput(surname) && checkLetterInput(firstname) && checkNumberInput(carelevel) && checkNumberInput(room)) {
+            try {
+                Patient p = new Patient(firstname, surname, date, carelevel, room);
+                dao.create(p);
+            } catch (Exception e) {
+                Alerts.wrongOrMissingDataAlert();
+            }
+            readAllAndShowInTableView();
+            clearAllFields();
+        } else {
+            Alerts.wrongDataAlert();
         }
-        readAllAndShowInTableView();
-        clearAllFields();
+
     }
+
+    private boolean checkLetterInput(String str) {
+        char[] chars = str.toCharArray();
+        for (char c : chars) {
+            if (!Character.isLetter(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean checkNumberInput(String str) {
+        char[] chars = str.toCharArray();
+        for (char c : chars) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     /**
      * removes content from all fields
@@ -222,4 +277,6 @@ public class AllPatientController {
         this.txtCarelevel.clear();
         this.txtRoom.clear();
     }
+
+
 }

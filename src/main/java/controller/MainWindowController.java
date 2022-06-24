@@ -65,7 +65,7 @@ public class MainWindowController {
 
     @FXML
     public void handleShowAllCaregiver() {
-        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/AllCaregiverView.fxml"));
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/AllCaretakerView.fxml"));
         try {
             mainBorderPane.setCenter(loader.load());
         } catch (IOException ex) {

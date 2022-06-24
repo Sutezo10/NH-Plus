@@ -1,45 +1,4 @@
 /*C2*/SET SCHEMA PUBLIC
-INSERT INTO CARETAKER VALUES(8,'ssss','ssss','ababa')
+DELETE FROM PATIENT WHERE PID=1
+INSERT INTO PATIENT VALUES(1,'Seppl','Herberger','1945-12-02',4,'202')
 COMMIT
-DELETE FROM TREATMENT WHERE TID=1
-INSERT INTO TREATMENT VALUES(1,1,'2020-06-03','11:00','15:00','Gespr\u00e4ch','Der Patient hat enorme Angstgef\u00fchle und glaubt, er sei \u00fcberfallen worden. Ihm seien alle Wertsachen gestohlen worden. \u000aPatient beruhigt sich erst, als alle Wertsachen im Zimmer gefunden worden sind. ','Gesperrt','2022-06-16',-10000)
-COMMIT
-DELETE FROM TREATMENT WHERE TID=2
-INSERT INTO TREATMENT VALUES(2,1,'2020-06-05','11:00','12:30','Gespr\u00e4ch','Patient irrt auf der Suche nach gestohlenen Wertsachen durch die Etage und bezichtigt andere Bewohner des Diebstahls.\u000aPatient wird in seinen Raum zur\u00fcckbegleitet und erh\u00e4lt Beruhigungsmittel.','Entsperrt','2022-06-01',0)
-COMMIT
-DELETE FROM TREATMENT WHERE TID=3
-INSERT INTO TREATMENT VALUES(3,3,'2020-06-04','07:30','08:00','Waschen','Patient mit Waschlappen gewaschen und frisch angezogen. Patient gewendet.','Gesperrt','2022-06-23',4)
-COMMIT
-DELETE FROM TREATMENT WHERE TID=4
-INSERT INTO TREATMENT VALUES(4,1,'2020-06-06','15:10','16:00','Spaziergang','Spaziergang im Park, Patient d\u00f6st  im Rollstuhl ein','Entsperrt','2022-06-01',-10000)
-COMMIT
-DELETE FROM TREATMENT WHERE TID=5
-INSERT INTO TREATMENT VALUES(5,1,'2020-06-08','15:00','16:00','Spaziergang','Parkspaziergang; Patient ist heute lebhafter und hat klare Momente; erz\u00e4hlt von seiner Tochter','Entsperrt','2022-06-01',-10000)
-COMMIT
-DELETE FROM TREATMENT WHERE TID=6
-INSERT INTO TREATMENT VALUES(6,3,'2020-06-07','11:00','11:30','Waschen','Waschen per Dusche auf einem Stuhl; Patientin gewendet;','Entsperrt','2022-06-01',0)
-COMMIT
-DELETE FROM TREATMENT WHERE TID=7
-INSERT INTO TREATMENT VALUES(7,11,'2020-06-08','15:00','15:30','Physiotherapie','\u00dcbungen zur Stabilisation und Mobilisierung der R\u00fcckenmuskulatur','Gesperrt','2022-06-16',-10000)
-COMMIT
-DELETE FROM TREATMENT WHERE TID=8
-INSERT INTO TREATMENT VALUES(8,5,'2020-08-24','09:30','10:15','KG','Lympfdrainage','Entsperrt','2022-06-01',0)
-COMMIT
-DELETE FROM TREATMENT WHERE TID=9
-INSERT INTO TREATMENT VALUES(9,15,'2020-08-31','13:30','13:45','Toilettengang','Hilfe beim Toilettengang; Patientin klagt \u00fcber Schmerzen beim Stuhlgang. Gabe von Iberogast','Entsperrt','2022-06-01',-10000)
-COMMIT
-DELETE FROM TREATMENT WHERE TID=10
-INSERT INTO TREATMENT VALUES(10,1,'2022-06-30','12:00','13:00','Spielen','abc','Gesperrt','2022-06-16',0)
-COMMIT
-DELETE FROM TREATMENT WHERE TID=11
-INSERT INTO TREATMENT VALUES(11,1,'2022-06-03','09:00','10:00','abc','abc','Entsperrt','2022-06-23',5)
-COMMIT
-DELETE FROM TREATMENT WHERE TID=37
-INSERT INTO TREATMENT VALUES(37,1,'2022-06-22','08:00','10:00','test','test','Entsperrt','2022-06-23',0)
-COMMIT
-DELETE FROM TREATMENT WHERE TID=38
-INSERT INTO TREATMENT VALUES(38,1,'2022-06-29','17:00','18:00','test','test','Entsperrt','2022-06-23',4)
-COMMIT
-DELETE FROM CARETAKER WHERE CID=8
-COMMIT
-DISCONNECT
