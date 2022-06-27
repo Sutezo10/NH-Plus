@@ -2,6 +2,7 @@ package controller;
 
 import datastorage.CaretakerDAO;
 import datastorage.DAOFactory;
+import datastorage.PatientDAO;
 import datastorage.TreatmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +23,10 @@ import java.util.List;
 import static utils.GeneralCheckMethods.checkLetterInput;
 import static utils.GeneralCheckMethods.checkNumberInput;
 
+
+/**
+ * The <code>AllCaretakerController</code> contains the entire logic of the caretaker view. It determines which data is displayed and how to react to events.
+ */
 public class AllCaretakerController {
 
     @FXML
@@ -49,6 +54,9 @@ public class AllCaretakerController {
     private final ObservableList<Caretaker> tableviewContent = FXCollections.observableArrayList();
     private CaretakerDAO caretakerDAO;
 
+    /**
+     * Initializes the corresponding fields. Is called as soon as the corresponding FXML file is to be displayed.
+     */
     public void initialize() {
         this.colFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         this.colFirstName.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -65,7 +73,11 @@ public class AllCaretakerController {
         readAllAndShowInTableView();
     }
 
-
+    /**
+     * Updates the passed data
+     *
+     * @param t data of the column, which need to be updated
+     */
     private void doUpdate(TableColumn.CellEditEvent<Caretaker, String> t) {
         try {
             caretakerDAO.update(t.getRowValue());
@@ -74,6 +86,11 @@ public class AllCaretakerController {
         }
     }
 
+    /**
+     * Handles the  edited var of the column surname
+     *
+     * @param event data of column, which was edited
+     */
     public void handleEditSurname(TableColumn.CellEditEvent<Caretaker, String> event) {
         if (checkLetterInput(event.getNewValue())) {
             event.getRowValue().setSurname(event.getNewValue());
@@ -85,6 +102,11 @@ public class AllCaretakerController {
 
     }
 
+    /**
+     * Handles the  edited var of the column firstname
+     *
+     * @param event data of column, which was edited
+     */
     public void handleEditFirstName(TableColumn.CellEditEvent<Caretaker, String> event) {
         if (checkLetterInput(event.getNewValue())) {
             event.getRowValue().setFirstName(event.getNewValue());
@@ -96,6 +118,11 @@ public class AllCaretakerController {
 
     }
 
+    /**
+     * Handles the  edited var of the column phonenumber
+     *
+     * @param event data of column, which was edited
+     */
     public void handleEditTelephone(TableColumn.CellEditEvent<Caretaker, String> event) {
         if (checkNumberInput(event.getNewValue())) {
             event.getRowValue().setPhoneNumber(event.getNewValue());
@@ -107,6 +134,10 @@ public class AllCaretakerController {
 
     }
 
+    /**
+     * Handles the action to add a caregiver to the database and reloads the table
+     * This Method is connected to the add-button
+     */
     @FXML
     public void handleAddCaregiver() {
         String surname = this.txfSurname.getText();
@@ -128,6 +159,10 @@ public class AllCaretakerController {
         }
     }
 
+    /**
+     * Handles the action to delete a caregiver from the database and reloads the table
+     * This Method is connected to the delete-button
+     */
     @FXML
     public void handleDeleteCaregiver() {
         Caretaker selectedItem = this.tableView.getSelectionModel().getSelectedItem();
@@ -154,6 +189,9 @@ public class AllCaretakerController {
 
     }
 
+    /**
+     * Calls readAll in {@link CaretakerDAO} and shows the caretakers in the table
+     */
     private void readAllAndShowInTableView() {
         this.tableviewContent.clear();
         this.caretakerDAO = DAOFactory.getDAOFactory().createCaretakerDAO();
@@ -167,7 +205,9 @@ public class AllCaretakerController {
         }
     }
 
-
+    /**
+     * Clears the textfields in the UI
+     */
     private void clearTextfields() {
         this.txfFirstname.clear();
         this.txfSurname.clear();

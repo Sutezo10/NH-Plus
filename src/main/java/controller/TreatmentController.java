@@ -20,6 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+/**
+ * The <code>TreatmentController</code> contains the entire logic of the treatment editor view. It determines which data is displayed and how to react to events.
+ */
 public class TreatmentController {
     @FXML
     public ComboBox<String> comboCaretaker;
@@ -52,7 +56,12 @@ public class TreatmentController {
 
     private CaretakerDAO caretakerDAO;
 
-
+    /**
+     * Initializes the controller
+     * @param controller sets the val of the private var
+     * @param stage sets the val of the private var
+     * @param treatment sets the val of the private var
+     */
     public void initializeController(AllTreatmentController controller, Stage stage, Treatment treatment) {
         this.stage = stage;
         this.controller = controller;
@@ -66,6 +75,9 @@ public class TreatmentController {
         }
     }
 
+    /**
+     * Shows the current data of the treatment
+     */
     private void showData() {
         this.lblPatientName.setText(patient.getSurname() + ", " + patient.getFirstName());
         this.lblCarelevel.setText(patient.getCareLevel());
@@ -80,6 +92,9 @@ public class TreatmentController {
         comboCaretaker.getSelectionModel().select(0);
     }
 
+    /**
+     * Creates the data which can be selected in the combo box
+     */
     private void createComboBoxData() {
         caretakerDAO = DAOFactory.getDAOFactory().createCaretakerDAO();
         try {
@@ -93,6 +108,10 @@ public class TreatmentController {
         }
     }
 
+    /**
+     * Handles the action to change the treatment with the new selected data
+     * is connected to the change-button
+     */
     @FXML
     public void handleChange() {
         this.treatment.setDate(this.datepicker.getValue().toString());
@@ -117,6 +136,9 @@ public class TreatmentController {
         stage.close();
     }
 
+    /**
+     * Updates the data with {@link TreatmentDAO}
+     */
     private void doUpdate() {
         TreatmentDAO dao = DAOFactory.getDAOFactory().createTreatmentDAO();
         try {
@@ -126,6 +148,10 @@ public class TreatmentController {
         }
     }
 
+    /**
+     * Handles the action to cancel and close the treatment editor view
+     * is connected to the cancel-button
+     */
     @FXML
     public void handleCancel() {
         stage.close();

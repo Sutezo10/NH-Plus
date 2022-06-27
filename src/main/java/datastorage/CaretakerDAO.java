@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * This Class provides the methods to act with the database of the caretaker
+ */
 public class CaretakerDAO extends DAOimp<Caretaker> {
 
     public static final long DELETE_ID = -10000;

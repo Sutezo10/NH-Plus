@@ -5,7 +5,7 @@ import javafx.scene.control.Alert;
 public class Alerts {
 
     /**
-     * General Alerts
+     * General Alert
      */
     public static Alert wrongOrMissingDataAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -15,7 +15,9 @@ public class Alerts {
         alert.showAndWait();
         return alert;
     }
-
+    /**
+     * General Alert
+     */
     public static Alert wrongDataAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(ControllerConstants.ALERT_ERROR_TITLE);
@@ -24,7 +26,9 @@ public class Alerts {
         alert.showAndWait();
         return alert;
     }
-
+    /**
+     * General Alert
+     */
     public static Alert missingDataAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(ControllerConstants.ALERT_ERROR_TITLE);
@@ -35,7 +39,7 @@ public class Alerts {
     }
 
     /**
-     * AllPatient Alerts
+     * AllPatient Alert
      */
 
     public static Alert noSelectionToDelete() {
@@ -48,7 +52,7 @@ public class Alerts {
     }
 
     /**
-     * AllTreatment Alerts
+     * AllTreatment Alert
      */
     public static Alert missingPatientAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -58,7 +62,9 @@ public class Alerts {
         alert.showAndWait();
         return alert;
     }
-
+    /**
+     * AllTreatment Alert
+     */
     public static Alert lockedTreatmentAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
@@ -68,6 +74,9 @@ public class Alerts {
         return alert;
     }
 
+    /**
+     * AllTreatment Alert
+     */
     public static Alert noSelectionToLockAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
@@ -76,6 +85,9 @@ public class Alerts {
         return alert;
     }
 
+    /**
+     * AllTreatment Alert
+     */
     public static Alert sameLockStateAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
@@ -84,9 +96,21 @@ public class Alerts {
         return alert;
     }
 
+    /**
+     * AllTreatment Alert
+     */
+    public static Alert canNotLoadCaretakerIDAlert(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(ControllerConstants.ALERT_ERROR_TITLE);
+        alert.setHeaderText("Fehler beim laden der Pfleger-ID!");
+        alert.setContentText("Beim Laden der Informationen vom Pfleger ist ein Fehler aufgetreten");
+        alert.showAndWait();
+        return alert;
+    }
+
 
     /**
-     * Login Alerts
+     * Login Alert
      */
 
     public static Alert alertUsernameNotFound() {
@@ -97,7 +121,9 @@ public class Alerts {
         alert.showAndWait();
         return alert;
     }
-
+    /**
+     * Login Alert
+     */
     public static Alert alertPasswordNotCorrect() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
@@ -106,7 +132,9 @@ public class Alerts {
         alert.showAndWait();
         return alert;
     }
-
+    /**
+     * Login Alert
+     */
     public static Alert alertNoInputs() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(ControllerConstants.ALERT_INFORMATION_TITLE);
@@ -115,5 +143,7 @@ public class Alerts {
         alert.showAndWait();
         return alert;
     }
+
+
 
 }

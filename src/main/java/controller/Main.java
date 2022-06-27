@@ -10,18 +10,28 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Main Class which contains the content of the Java-Fx starting process
+ */
 public class Main extends Application {
 
     public static Stage primaryStage;
 
 
+    /**
+     * Overwritten starting method of Java-Fx
+     * @param primaryStage used Stage to display the scenes
+     */
     @Override
     public void start(Stage primaryStage) {
         Main.primaryStage = primaryStage;
-        mainWindow();
+        loginWindow();
     }
 
-    public void mainWindow() {
+    /**
+     * Opens the login window and initializes some information about the application
+     */
+    public void loginWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/LoginView.fxml"));
             GridPane pane = loader.load();

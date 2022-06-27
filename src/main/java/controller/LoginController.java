@@ -17,6 +17,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The <code>AllLoginController</code> contains the entire logic of the login view. It reacts to the update process of the user.
+ */
+
 public class LoginController {
 
     @FXML
@@ -28,6 +32,9 @@ public class LoginController {
     private static String loggedInUser = "";
 
 
+    /**
+     * Checks the login process of the user with his entered data
+     */
     public void handleLoginButtonAction() {
         if (!usernameField.getText().isEmpty() && !passwordField.getText().isEmpty()) {
             checkInputs();
@@ -37,7 +44,10 @@ public class LoginController {
 
     }
 
-
+    /**
+     * Compares the inputs of the user data with the database data and switches the scene to the main view
+     * when the data is matching
+     */
     private void checkInputs() {
         UserDAO userDAO = DAOFactory.getDAOFactory().createUserDAO();
         List<User> allUsers;
@@ -60,6 +70,10 @@ public class LoginController {
         }
     }
 
+    /**
+     * Switches the view to the main view
+     */
+
     private void switchScene() {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/MainWindowView.fxml"));
         try {
@@ -71,11 +85,19 @@ public class LoginController {
         controller.setUserText();
     }
 
-
+    /**
+     * Getter for the logged in user
+     * @return logged in user
+     */
     public static String getLoggedInUser() {
         return loggedInUser;
     }
 
+
+    /**
+     * Gives the user the possibility to log in with the enter-button
+     * @param keyEvent used to get the keycode to see if it is the enter-button
+     */
     public void handleKeyPressed(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             handleLoginButtonAction();

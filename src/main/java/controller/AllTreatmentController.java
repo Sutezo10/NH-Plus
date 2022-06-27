@@ -26,6 +26,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The <code>AllTreatmentController</code> contains the entire logic of the treatment view. It determines which data is displayed and how to react to events.
+ */
 public class AllTreatmentController {
 
     @FXML
@@ -67,7 +70,9 @@ public class AllTreatmentController {
             FXCollections.observableArrayList();
     private ArrayList<Patient> patientList;
 
-
+    /**
+     * Initializes the view with given data
+     */
     public void initialize() {
         CaretakerDAO caretakerDAO = DAOFactory.getDAOFactory().createCaretakerDAO();
         createComboBoxData();
@@ -93,11 +98,7 @@ public class AllTreatmentController {
 
             } catch (SQLException e) {
                 e.printStackTrace();
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(ControllerConstants.ALERT_ERROR_TITLE);
-                alert.setHeaderText("Fehler beim laden der Pfleger-ID!");
-                alert.setContentText("Beim Laden der Informationen vom Pfleger ist ein Fehler aufgetreten");
-                alert.showAndWait();
+                Alerts.canNotLoadCaretakerIDAlert();
                 return new SimpleStringProperty("-");
             }
 
@@ -105,6 +106,9 @@ public class AllTreatmentController {
         this.tableView.setItems(this.tableviewContent);
     }
 
+    /**
+     * calls readAll in {@link TreatmentDAO} and shows the treatments in the table
+     */
     public void readAllAndShowInTableView() {
         this.tableviewContent.clear();
         this.treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
@@ -117,6 +121,10 @@ public class AllTreatmentController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Adds the chooseable data out of the patient database to the combobox
+     */
 
     private void createComboBoxData() {
         PatientDAO patientDAO = DAOFactory.getDAOFactory().createPatientDAO();
@@ -131,6 +139,9 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * Checks the locked date from the database with the actual date, to decide if treatments will be deleted
+     */
     private void checkLockedData() {
         treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
         try {
@@ -152,6 +163,9 @@ public class AllTreatmentController {
     }
 
 
+    /**
+     * Shows the treatments of the selected patient
+     */
     @FXML
     public void handleComboBox() {
         String p = this.comboBox.getSelectionModel().getSelectedItem();
@@ -177,7 +191,12 @@ public class AllTreatmentController {
         }
     }
 
-
+    /**
+     * This method returns a matching patient from a given surname
+     *
+     * @param surname is used to filter through the patient data
+     * @return the matching patient
+     */
     private Patient searchInList(String surname) {
         for (Patient patient : this.patientList) {
             if (patient.getSurname().equals(surname)) {
@@ -187,6 +206,10 @@ public class AllTreatmentController {
         return null;
     }
 
+
+    /**
+     * Handles the action to delete a treatment from the database and updates the shown treatments
+     */
     @FXML
     public void handleDelete() {
         int index = this.tableView.getSelectionModel().getSelectedIndex();
@@ -199,6 +222,9 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * Opens a new window, where a new treatment can be created
+     */
     @FXML
     public void handleNewTreatment() {
         try {
@@ -210,6 +236,10 @@ public class AllTreatmentController {
         }
     }
 
+
+    /**
+     * Handles the mouse click on a treatment, opens an editor window if the click condition is reached
+     */
     @FXML
     public void handleMouseClick() {
         tableView.setOnMouseClicked(event -> {
@@ -229,6 +259,11 @@ public class AllTreatmentController {
         });
     }
 
+    /**
+     * Opens the view for the new Treatment window
+     *
+     * @param patient data which is needed to initialize the  controller of the new view
+     */
     public void newTreatmentWindow(Patient patient) {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/NewTreatmentView.fxml"));
@@ -248,6 +283,11 @@ public class AllTreatmentController {
         }
     }
 
+    /**
+     * Opens the view of the editor window
+     *
+     * @param treatment data which is needed to initialize the  controller of the new view
+     */
     public void treatmentWindow(Treatment treatment) {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/TreatmentView.fxml"));
@@ -267,39 +307,60 @@ public class AllTreatmentController {
         }
     }
 
-
+    /**
+     * Handles the action to lock a Treatment
+     * is connected to the lock-button
+     */
+    @FXML
     public void handleLockTreatment() {
         lockFunction(ControllerConstants.LOCKED);
 
 
     }
-
+    /**
+     * Handles the action to unlock a Treatment
+     * is connected to the unlock-button
+     */
+    @FXML
     public void handleUnlockTreatment() {
         lockFunction(ControllerConstants.UNLOCKED);
     }
 
+    /**
+     * First checks the validity of the Selection, then goes into the lock process
+     * @param constant is used to call the matching process of this constant
+     */
     private void lockFunction(String constant) {
         int index = this.tableView.getSelectionModel().getSelectedIndex();
         if (index > 0) {
             Treatment treatment = this.tableviewContent.get(index);
             treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
-            if (!constant.equals(treatment.getLockState())) {
-                try {
-                    treatment.setLockState(constant);
-                    treatment.setLockDate(LocalDate.now().toString());
-                    treatmentDAO.update(treatment);
-
-                } catch (SQLException e) {
-                    Alerts.noSelectionToLockAlert();
-                }
-                readAllAndShowInTableView();
-            } else {
-                Alerts.sameLockStateAlert();
-            }
+            lockingTreatment(constant, treatment);
         } else {
             Alerts.noSelectionToLockAlert();
         }
 
+    }
+
+    /**
+     * Trys to lock the treatment with the {@link TreatmentDAO}
+     * @param constant decides the lock-state of the treatment
+     * @param treatment which gets locked or unlocked
+     */
+    private void lockingTreatment(String constant, Treatment treatment) {
+        if (!constant.equals(treatment.getLockState())) {
+            try {
+                treatment.setLockState(constant);
+                treatment.setLockDate(LocalDate.now().toString());
+                treatmentDAO.update(treatment);
+
+            } catch (SQLException e) {
+                Alerts.noSelectionToLockAlert();
+            }
+            readAllAndShowInTableView();
+        } else {
+            Alerts.sameLockStateAlert();
+        }
     }
 }
 
