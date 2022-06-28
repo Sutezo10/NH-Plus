@@ -16,7 +16,14 @@ public class Patient extends Person {
 
     private final List<Treatment> allTreatments = new ArrayList<>();
 
-
+    /**
+     * Default constructor, without pid
+     *  @param firstName sets the val of the private var
+     * @param surname sets the val of the private var
+     * @param dateOfBirth sets the val of the private var
+     * @param careLevel sets the val of the private var
+     * @param roomnumber sets the val of the private var
+     */
     public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomnumber) {
         super(firstName, surname);
         this.dateOfBirth = dateOfBirth;
@@ -24,6 +31,15 @@ public class Patient extends Person {
         this.roomnumber = roomnumber;
     }
 
+    /**
+     * Default constructor, with pid
+     * @param pid sets the val of the private var
+     *  @param firstName sets the val of the private var
+     * @param surname sets the val of the private var
+     * @param dateOfBirth sets the val of the private var
+     * @param careLevel sets the val of the private var
+     * @param roomnumber sets the val of the private var
+     */
 
     public Patient(long pid, String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomnumber) {
         super(firstName, surname);
@@ -82,7 +98,7 @@ public class Patient extends Person {
     }
 
     /**
-     *
+     * @param roomnumber  new roomnumber
      */
     public void setRoomnumber(String roomnumber) {
         this.roomnumber = roomnumber;
