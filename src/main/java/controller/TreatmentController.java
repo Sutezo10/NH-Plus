@@ -12,10 +12,12 @@ import javafx.stage.Stage;
 import model.Caretaker;
 import model.Patient;
 import model.Treatment;
+import utils.Alerts;
 import utils.DateConverter;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -115,22 +117,23 @@ public class TreatmentController {
     @FXML
     public void handleChange() {
         this.treatment.setDate(this.datepicker.getValue().toString());
-        this.treatment.setBegin(txtBegin.getText());
-        this.treatment.setEnd(txtEnd.getText());
+
         this.treatment.setDescription(txtDescription.getText());
         this.treatment.setRemarks(taRemarks.getText());
         caretakerDAO = DAOFactory.getDAOFactory().createCaretakerDAO();
         Optional<Caretaker> caretaker;
         try {
+            LocalTime.parse(txtBegin.getText());
+            LocalTime.parse(txtEnd.getText());
+            this.treatment.setBegin(txtBegin.getText());
+            this.treatment.setEnd(txtEnd.getText());
             List<Caretaker> caretakerList = caretakerDAO.readAll();
             caretaker = caretakerList.stream().filter(c -> c.getSurname().equals(comboCaretaker.getSelectionModel().getSelectedItem())).findAny();
             caretaker.ifPresent(value -> this.treatment.setCid(value.getCid()));
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Alerts.wrongOrMissingDataAlert();
         }
-
-
         doUpdate();
         controller.readAllAndShowInTableView();
         stage.close();
