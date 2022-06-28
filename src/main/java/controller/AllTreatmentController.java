@@ -216,13 +216,18 @@ public class AllTreatmentController {
     @FXML
     public void handleDelete() {
         int index = this.tableView.getSelectionModel().getSelectedIndex();
-        Treatment t = this.tableviewContent.remove(index);
-        treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
-        try {
-            treatmentDAO.deleteById(t.getTid());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (index >= 0){
+            Treatment t = this.tableviewContent.remove(index);
+            treatmentDAO = DAOFactory.getDAOFactory().createTreatmentDAO();
+            try {
+                treatmentDAO.deleteById(t.getTid());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }else {
+            Alerts.noSelectionToDelete();
         }
+
     }
 
     /**
