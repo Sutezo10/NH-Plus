@@ -1,30 +1,41 @@
 package model;
 
+/**
+ * This class provides the model "User", which is used for the login process
+ */
 public class User {
 
-    private String userName;
+    private final String userName;
 
-    private String password;
+    private final String password;
 
+    /**
+     * default constructor
+     *
+     * @param userName sets val the private var
+     * @param password sets val the private var
+     */
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }
 
-
+    /**
+     * Getter of the username
+     *
+     * @return the username of the private var
+     */
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
+    /**
+     * Getter of the password
+     *
+     * @return the password of the private var
+     */
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

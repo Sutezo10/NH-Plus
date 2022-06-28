@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.DatePicker?>
 <AnchorPane prefHeight="500.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AllPatientController">
    <children>
       <TableView fx:id="tableView" editable="true" layoutX="31.0" layoutY="120.0" prefHeight="287.0" prefWidth="825.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="80.0">
@@ -20,7 +21,7 @@
             <TableColumn fx:id="colID" maxWidth="1200.0" minWidth="5.0" prefWidth="5.0" text="ID" />
           <TableColumn fx:id="colSurname" maxWidth="7500.0" minWidth="20.0" onEditCommit="#handleOnEditSurname" prefWidth="100.0" text="Nachname" />
           <TableColumn fx:id="colFirstName" maxWidth="7500.0" onEditCommit="#handleOnEditFirstname" prefWidth="75.0" text="Vorname" />
-            <TableColumn fx:id="colDateOfBirth" maxWidth="7500.0" onEditCommit="#handleOnEditDateOfBirth" prefWidth="75.0" text="Geburtstag" />
+            <TableColumn fx:id="colDateOfBirth" maxWidth="7500.0"  onEditCommit="#handleOnEditDateOfBirth"  prefWidth="75.0" text="Geburtstag" />
             <TableColumn fx:id="colCareLevel" onEditCommit="#handleOnEditCareLevel" prefWidth="75.0" text="Pflegegrad" />
             <TableColumn fx:id="colRoom" onEditCommit="#handleOnEditRoomnumber" prefWidth="75.0" text="Raum" />
         </columns>
@@ -43,7 +44,7 @@
                <children>
                   <TextField fx:id="txtSurname" minWidth="200.0" prefHeight="26.0" prefWidth="200.0" promptText="Nachname" GridPane.columnIndex="1" />
                   <TextField fx:id="txtFirstname" minWidth="200.0" prefHeight="26.0" prefWidth="200.0" promptText="Vorname" />
-                  <TextField fx:id="txtBirthday" minWidth="160.0" prefWidth="160.0" promptText="Geburtstag" GridPane.columnIndex="2" />
+                  <DatePicker fx:id="birthdayPicker" minWidth="160.0" prefWidth="160.0" editable="false" promptText="Geburtstag" GridPane.columnIndex="2" />
                   <TextField fx:id="txtCarelevel" prefHeight="26.0" prefWidth="200.0" promptText="Pflegegrad" GridPane.rowIndex="1" />
                   <TextField fx:id="txtRoom" prefHeight="26.0" prefWidth="200.0" promptText="Raum" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
@@ -54,7 +55,7 @@
                   <Insets />
                </HBox.margin>
             </GridPane>
-            <HBox alignment="TOP_CENTER" prefWidth="190.0" spacing="10.0">
+            <HBox alignment="BOTTOM_CENTER" prefWidth="190.0" spacing="10.0">
                <children>
                   <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#handleAdd" prefWidth="90.0" text="Hinzufügen" />
                   <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#handleDeleteRow" prefWidth="90.0" text="Löschen" />

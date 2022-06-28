@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Button?>
 <?import java.net.URL?>
-<GridPane  fx:controller="controller.LoginController" xmlns:fx="http://javafx.com/fxml" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="688.0" prefWidth="926.0" alignment="center" hgap="10" vgap="10">
+<GridPane onKeyPressed="#handleKeyPressed" fx:controller="controller.LoginController" xmlns:fx="http://javafx.com/fxml" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="688.0" prefWidth="926.0" alignment="center" hgap="10" vgap="10">
     <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
 
 
@@ -21,7 +21,7 @@
           GridPane.columnIndex="0" GridPane.rowIndex="0"
           GridPane.columnSpan="2"/>
 
-    <Label id = "user-name-text" text="User Name:"
+    <Label id = "user-name-text" text="Username:"
            GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
     <TextField fx:id="usernameField"

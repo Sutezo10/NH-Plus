@@ -7,10 +7,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class DAOimp<T> implements DAO<T>{
+public abstract class DAOimp<T> implements DAO<T> {
     protected Connection conn;
 
-    public DAOimp(Connection conn) {
+    protected DAOimp(Connection conn) {
         this.conn = conn;
     }
 
@@ -33,8 +33,7 @@ public abstract class DAOimp<T> implements DAO<T>{
 
     @Override
     public List<T> readAll() throws SQLException {
-        ArrayList<T> list = new ArrayList<T>();
-        T object = null;
+        ArrayList<T> list;
         Statement st = conn.createStatement();
         ResultSet result = st.executeQuery(getReadAllStatementString());
         list = getListFromResultSet(result);
