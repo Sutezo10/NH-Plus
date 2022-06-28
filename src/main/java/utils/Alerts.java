@@ -15,6 +15,7 @@ public class Alerts {
         alert.showAndWait();
         return alert;
     }
+
     /**
      * General Alert
      */
@@ -26,6 +27,7 @@ public class Alerts {
         alert.showAndWait();
         return alert;
     }
+
     /**
      * General Alert
      */
@@ -62,6 +64,7 @@ public class Alerts {
         alert.showAndWait();
         return alert;
     }
+
     /**
      * AllTreatment Alert
      */
@@ -99,7 +102,7 @@ public class Alerts {
     /**
      * AllTreatment Alert
      */
-    public static Alert canNotLoadCaretakerIDAlert(){
+    public static Alert canNotLoadCaretakerIDAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(ControllerConstants.ALERT_ERROR_TITLE);
         alert.setHeaderText("Fehler beim laden der Pfleger-ID!");
@@ -121,6 +124,7 @@ public class Alerts {
         alert.showAndWait();
         return alert;
     }
+
     /**
      * Login Alert
      */
@@ -132,6 +136,7 @@ public class Alerts {
         alert.showAndWait();
         return alert;
     }
+
     /**
      * Login Alert
      */
@@ -143,7 +148,6 @@ public class Alerts {
         alert.showAndWait();
         return alert;
     }
-
 
 
 }

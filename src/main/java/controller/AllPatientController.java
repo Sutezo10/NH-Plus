@@ -250,8 +250,6 @@ public class AllPatientController {
     }
 
 
-
-
     /**
      * removes content from all fields
      */

@@ -1,6 +1,7 @@
 package model;
 
 import utils.DateConverter;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +19,12 @@ public class Patient extends Person {
 
     /**
      * Default constructor, without pid
-     *  @param firstName sets the val of the private var
-     * @param surname sets the val of the private var
+     *
+     * @param firstName   sets the val of the private var
+     * @param surname     sets the val of the private var
      * @param dateOfBirth sets the val of the private var
-     * @param careLevel sets the val of the private var
-     * @param roomnumber sets the val of the private var
+     * @param careLevel   sets the val of the private var
+     * @param roomnumber  sets the val of the private var
      */
     public Patient(String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomnumber) {
         super(firstName, surname);
@@ -33,12 +35,13 @@ public class Patient extends Person {
 
     /**
      * Default constructor, with pid
-     * @param pid sets the val of the private var
-     *  @param firstName sets the val of the private var
-     * @param surname sets the val of the private var
+     *
+     * @param pid         sets the val of the private var
+     * @param firstName   sets the val of the private var
+     * @param surname     sets the val of the private var
      * @param dateOfBirth sets the val of the private var
-     * @param careLevel sets the val of the private var
-     * @param roomnumber sets the val of the private var
+     * @param careLevel   sets the val of the private var
+     * @param roomnumber  sets the val of the private var
      */
 
     public Patient(long pid, String firstName, String surname, LocalDate dateOfBirth, String careLevel, String roomnumber) {
@@ -50,7 +53,6 @@ public class Patient extends Person {
     }
 
     /**
-     *
      * @return patient id
      */
     public long getPid() {
@@ -58,7 +60,6 @@ public class Patient extends Person {
     }
 
     /**
-     *
      * @return date of birth as a string
      */
     public String getDateOfBirth() {
@@ -67,6 +68,7 @@ public class Patient extends Person {
 
     /**
      * convert given param to a localDate and store as new <code>birthOfDate</code>
+     *
      * @param dateOfBirth as string in the following format: YYYY-MM-DD
      */
     public void setDateOfBirth(String dateOfBirth) {
@@ -74,7 +76,6 @@ public class Patient extends Person {
     }
 
     /**
-     *
      * @return careLevel
      */
     public String getCareLevel() {
@@ -82,7 +83,6 @@ public class Patient extends Person {
     }
 
     /**
-     *
      * @param careLevel new care level
      */
     public void setCareLevel(String careLevel) {
@@ -90,7 +90,6 @@ public class Patient extends Person {
     }
 
     /**
-     *
      * @return roomNumber as string
      */
     public String getRoomnumber() {
@@ -98,18 +97,16 @@ public class Patient extends Person {
     }
 
     /**
-     * @param roomnumber  new roomnumber
+     * @param roomnumber new roomnumber
      */
     public void setRoomnumber(String roomnumber) {
         this.roomnumber = roomnumber;
     }
 
 
-
-
-
     /**
      * adds a treatment to the treatment-list, if it does not already contain it.
+     *
      * @param m Treatment
      * @return true if the treatment was not already part of the list. otherwise false
      */
@@ -122,7 +119,6 @@ public class Patient extends Person {
     }
 
     /**
-     *
      * @return string-representation of the patient
      */
     public String toString() {

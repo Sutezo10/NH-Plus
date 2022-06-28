@@ -10,7 +10,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -317,6 +320,7 @@ public class AllTreatmentController {
 
 
     }
+
     /**
      * Handles the action to unlock a Treatment
      * is connected to the unlock-button
@@ -328,6 +332,7 @@ public class AllTreatmentController {
 
     /**
      * First checks the validity of the Selection, then goes into the lock process
+     *
      * @param constant is used to call the matching process of this constant
      */
     private void lockFunction(String constant) {
@@ -344,7 +349,8 @@ public class AllTreatmentController {
 
     /**
      * Trys to lock the treatment with the {@link TreatmentDAO}
-     * @param constant decides the lock-state of the treatment
+     *
+     * @param constant  decides the lock-state of the treatment
      * @param treatment which gets locked or unlocked
      */
     private void lockingTreatment(String constant, Treatment treatment) {

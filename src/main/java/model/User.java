@@ -11,6 +11,7 @@ public class User {
 
     /**
      * default constructor
+     *
      * @param userName sets val the private var
      * @param password sets val the private var
      */
@@ -21,6 +22,7 @@ public class User {
 
     /**
      * Getter of the username
+     *
      * @return the username of the private var
      */
     public String getUserName() {
@@ -29,6 +31,7 @@ public class User {
 
     /**
      * Getter of the password
+     *
      * @return the password of the private var
      */
     public String getPassword() {

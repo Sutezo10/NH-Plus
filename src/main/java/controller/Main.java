@@ -20,6 +20,7 @@ public class Main extends Application {
 
     /**
      * Overwritten starting method of Java-Fx
+     *
      * @param primaryStage used Stage to display the scenes
      */
     @Override

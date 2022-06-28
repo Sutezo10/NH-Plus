@@ -6,7 +6,8 @@ import java.time.LocalTime;
 public class DateConverter {
 
     /**
-     *Converts a String to a Local Date
+     * Converts a String to a Local Date
+     *
      * @param date is the string which is getting formed
      * @return the LocalDate that got formed
      */
@@ -17,7 +18,8 @@ public class DateConverter {
     }
 
     /**
-     *Converts a String to a Local Time
+     * Converts a String to a Local Time
+     *
      * @param time is the string which is getting formed
      * @return LocalTime that got formed
      */

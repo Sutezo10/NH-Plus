@@ -52,9 +52,10 @@ public class NewTreatmentController {
 
     /**
      * Initializes the view with given data
+     *
      * @param controller sets val of the private var
-     * @param stage sets the val of the private var
-     * @param patient set the val of the private var
+     * @param stage      sets the val of the private var
+     * @param patient    set the val of the private var
      */
     public void initialize(AllTreatmentController controller, Stage stage, Patient patient) {
         this.controller = controller;
@@ -117,6 +118,7 @@ public class NewTreatmentController {
 
     /**
      * This method returns a matching caretaker from a given surname
+     *
      * @param surname is used to find a matching caretaker
      * @return the matching caretaker from the surname
      */
@@ -131,6 +133,7 @@ public class NewTreatmentController {
 
     /**
      * Creates the new treatment with {@link TreatmentDAO}
+     *
      * @param treatment which will we created
      */
     private void createTreatment(Treatment treatment) {

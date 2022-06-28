@@ -8,7 +8,6 @@ public class GeneralCheckMethods {
 
 
     /**
-     *
      * Checks, if the input contains only Letters
      *
      * @param str input from the field, which is getting checked
@@ -25,7 +24,6 @@ public class GeneralCheckMethods {
     }
 
     /**
-     *
      * Checks, if the input contains only Numbers
      *
      * @param str input from the field, which is getting checked

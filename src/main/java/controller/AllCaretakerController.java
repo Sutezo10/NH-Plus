@@ -2,7 +2,6 @@ package controller;
 
 import datastorage.CaretakerDAO;
 import datastorage.DAOFactory;
-import datastorage.PatientDAO;
 import datastorage.TreatmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

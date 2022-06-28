@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class DAOimp<T> implements DAO<T>{
+public abstract class DAOimp<T> implements DAO<T> {
     protected Connection conn;
 
     protected DAOimp(Connection conn) {

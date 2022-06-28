@@ -87,6 +87,7 @@ public class LoginController {
 
     /**
      * Getter for the logged in user
+     *
      * @return logged in user
      */
     public static String getLoggedInUser() {
@@ -96,6 +97,7 @@ public class LoginController {
 
     /**
      * Gives the user the possibility to log in with the enter-button
+     *
      * @param keyEvent used to get the keycode to see if it is the enter-button
      */
     public void handleKeyPressed(KeyEvent keyEvent) {

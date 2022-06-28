@@ -2,6 +2,7 @@ package datastorage;
 
 import model.Patient;
 import utils.DateConverter;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -98,6 +99,7 @@ public class PatientDAO extends DAOimp<Patient> {
 
     /**
      * generates a <code>delete</code>-Statement for a given key
+     *
      * @param key for which a specific DELETE is to be created
      * @return <code>String</code> with the generated SQL.
      */

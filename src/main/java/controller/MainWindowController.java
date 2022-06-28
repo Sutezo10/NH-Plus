@@ -34,7 +34,7 @@ public class MainWindowController {
     /**
      * Handles the action to show the patient view
      * is connected to the patient-button
-     * */
+     */
     @FXML
     private void handleShowAllPatient() {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("/AllPatientView.fxml"));

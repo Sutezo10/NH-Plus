@@ -20,6 +20,7 @@ public class UserDAO extends DAOimp<User> {
 
     /**
      * generates a <code>INSERT INTO</code>-Statement for a given user
+     *
      * @param user for which a specific INSERT INTO is to be created
      * @return <code>String</code> with the generated SQL.
      */
@@ -28,8 +29,10 @@ public class UserDAO extends DAOimp<User> {
         return String.format("INSERT INTO user (username, password) VALUES ('%s', '%s')",
                 user.getUserName(), user.getPassword());
     }
+
     /**
      * generates a <code>select</code>-Statement for a given key
+     *
      * @param key for which a specific SELECT is to be created
      * @return <code>String</code> with the generated SQL.
      */
@@ -37,8 +40,10 @@ public class UserDAO extends DAOimp<User> {
     protected String getReadByIDStatementString(long key) {
         return String.format("SELECT * FROM user WHERE username = %d", key);
     }
+
     /**
      * maps a <code>ResultSet</code> to a <code>User</code>
+     *
      * @param result ResultSet with a single row. Columns will be mapped to a user-object.
      * @return user with the data from the resultSet.
      */
@@ -48,16 +53,20 @@ public class UserDAO extends DAOimp<User> {
         p = new User(result.getString(1), result.getString(2));
         return p;
     }
+
     /**
      * generates a <code>SELECT</code>-Statement for all users.
+     *
      * @return <code>String</code> with the generated SQL.
      */
     @Override
     protected String getReadAllStatementString() {
         return "SELECT * FROM user";
     }
+
     /**
      * maps a <code>ResultSet</code> to a <code>User-List</code>
+     *
      * @param result ResultSet with a multiple rows. Data will be mapped to user-object.
      * @return ArrayList with users from the resultSet.
      */
@@ -71,8 +80,10 @@ public class UserDAO extends DAOimp<User> {
         }
         return list;
     }
+
     /**
      * generates a <code>UPDATE</code>-Statement for a given User
+     *
      * @param user for which a specific update is to be created
      * @return <code>String</code> with the generated SQL.
      */
@@ -80,8 +91,10 @@ public class UserDAO extends DAOimp<User> {
     protected String getUpdateStatementString(User user) {
         return String.format("UPDATE user SET username = '%s', password = '%s'", user.getUserName(), user.getPassword());
     }
+
     /**
      * generates a <code>delete</code>-Statement for a given key
+     *
      * @param key for which a specific DELETE is to be created
      * @return <code>String</code> with the generated SQL.
      */

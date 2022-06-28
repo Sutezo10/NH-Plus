@@ -9,8 +9,9 @@ public abstract class Person {
 
     /**
      * Default constructor
-      * @param firstName sets the val of the private var
-     * @param surname sets the val of the private var
+     *
+     * @param firstName sets the val of the private var
+     * @param surname   sets the val of the private var
      */
     public Person(String firstName, String surname) {
         this.firstName = firstName;
@@ -19,6 +20,7 @@ public abstract class Person {
 
     /**
      * Getter of firstname
+     *
      * @return the val of firstname
      */
     public String getFirstName() {
@@ -27,6 +29,7 @@ public abstract class Person {
 
     /**
      * Setter of firstname
+     *
      * @param firstName sets the val of firstname
      */
     public void setFirstName(String firstName) {
@@ -35,6 +38,7 @@ public abstract class Person {
 
     /**
      * Getter of surname
+     *
      * @return sets the val of surname
      */
     public String getSurname() {
@@ -43,6 +47,7 @@ public abstract class Person {
 
     /**
      * Setter of surname
+     *
      * @param surname sets the val of surname
      */
     public void setSurname(String surname) {

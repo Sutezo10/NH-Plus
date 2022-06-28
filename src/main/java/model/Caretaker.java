@@ -11,9 +11,10 @@ public class Caretaker extends Person {
 
     /**
      * Default constructor, with cid
-     * @param firstName sets the val of the private var
-     * @param surname sets the val of the private var
-     * @param cid sets the val of the private var
+     *
+     * @param firstName   sets the val of the private var
+     * @param surname     sets the val of the private var
+     * @param cid         sets the val of the private var
      * @param phoneNumber sets the val of the private var
      */
     public Caretaker(String firstName, String surname, long cid, String phoneNumber) {
@@ -21,10 +22,12 @@ public class Caretaker extends Person {
         this.cid = cid;
         this.phoneNumber = phoneNumber;
     }
+
     /**
      * Default constructor, without cid
-     * @param firstName sets the val of the private var
-     * @param surname sets the val of the private var
+     *
+     * @param firstName   sets the val of the private var
+     * @param surname     sets the val of the private var
      * @param phoneNumber sets the val of the private var
      */
     public Caretaker(String firstName, String surname, String phoneNumber) {
@@ -34,6 +37,7 @@ public class Caretaker extends Person {
 
     /**
      * Getter of cid
+     *
      * @return the val of cid
      */
     public long getCid() {
@@ -42,6 +46,7 @@ public class Caretaker extends Person {
 
     /**
      * Getter of phoneNumber
+     *
      * @return the val of phoneNumber
      */
     public String getPhoneNumber() {
@@ -50,6 +55,7 @@ public class Caretaker extends Person {
 
     /**
      * Setter of phoneNumber
+     *
      * @param phoneNumber sets the val of phoneNumber
      */
     public void setPhoneNumber(String phoneNumber) {

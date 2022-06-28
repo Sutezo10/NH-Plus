@@ -31,7 +31,7 @@ public class ConnectionBuilder {
 
     public static void closeConnection() {
         try {
-            if(conn != null){
+            if (conn != null) {
                 conn.close();
             }
         } catch (SQLException e) {
